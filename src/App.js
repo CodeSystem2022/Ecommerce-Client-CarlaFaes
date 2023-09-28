@@ -1,4 +1,3 @@
-import "./App.css";
 import ShopSection from "./components/homeComponents/ShopSection";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
