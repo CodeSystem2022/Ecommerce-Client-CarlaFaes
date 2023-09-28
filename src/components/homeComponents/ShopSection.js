@@ -18,17 +18,25 @@ const ShopSection = () => {
   console.log(products, "products");
   return (
     <div>
-      PRODUCTOS
-      {products ? (
-        products.map((product) => (
-          <div key={product.id}>
-            <img src={product.image} alt="img_" />
-            <p>{product.name}</p>
-          </div>
-        ))
-      ) : (
-        <p>no hay</p>
-      )}
+      {
+        loading ? (<p>Loading</p>):
+        error?(<p>Error</p>):
+        (
+          <>
+          PRODUCTOS
+          {products ? (
+            products.map((product) => (
+              <div key={product.id}>
+                <img src={product.image} alt="img_" />
+                <p>{product.name}</p>
+              </div>
+            ))
+          ) : (
+            <p>no hay</p>
+          )}
+          </>
+        )  
+      }
       <Pagination />
       <Rating />
     </div>
