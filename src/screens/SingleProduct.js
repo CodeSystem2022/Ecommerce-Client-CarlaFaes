@@ -5,25 +5,20 @@ import { Link } from "react-router-dom";
 import Message from "../components/LoadingError/Error";
 import axios from 'axios'
 import {useParams} from 'react-router';
+import { useDispatch, useSelector } from "react-redux";
+import { listProductDetail } from "../Redux/Actions/ProductActions";
 
 const SingleProduct=({match})=>{
     const [product, setProduct]=useState({});
     const {id}=useParams();
-    console.log(id,'id',product,'product')
+    const dispatch=useDispatch()
+    const productDetail = useSelector((state) => state.productDetail);
+    const { loading, error, products } = productDetail;
 
 
     useEffect(()=> {
-        const fetchProduct = async () => {
-            try {
-              const { data } = await axios.get(`/api/products/${id}`);
-              setProduct(data);
-              console.log(data,'data');
-            } catch (error) {
-              console.error('Error fetching product:', error);
-            }
-        }
-        fetchProduct();
-    },[id])
+       dispatch(listProductDetail(id))
+    },[dispatch,id])
   
 
     return(

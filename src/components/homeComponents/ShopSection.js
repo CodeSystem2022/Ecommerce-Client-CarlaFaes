@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Rating from "./Rating";
 import Pagination from "./Pagination";
+import Loading from'../LoadingError/Loading'
+import Message from'../LoadingError/Error'
 import { listProduct } from "../../Redux/Actions/ProductActions";
 
 const ShopSection = () => {
@@ -19,8 +21,8 @@ const ShopSection = () => {
   return (
     <div>
       {
-        loading ? (<p>Loading</p>):
-        error?(<p>Error</p>):
+        loading ? (<Loading/>):
+        error?(<Message variant="alert-danger">{error}</Message>):
         (
           <>
           PRODUCTOS

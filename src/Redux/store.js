@@ -2,10 +2,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { productListReducer } from './Reducers/ProductsReducer';
+import { productDetailReducer, productListReducer } from './Reducers/ProductsReducer';
 
 const rootReducer = combineReducers({
-  productList:productListReducer
+  productList:productListReducer,
+  productsDetail:productDetailReducer,
   
 });
 
