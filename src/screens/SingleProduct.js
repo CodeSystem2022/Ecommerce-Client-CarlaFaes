@@ -8,7 +8,6 @@ import axios from "axios";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import {listProductDetail } from "../Redux/Actions/ProductActions";
-import {productsDetail}  from "../Redux/Reducers/ProductsReducer"
 
 const SingleProduct = ({ match }) => {
   //const [product, setProduct] = useState({});
