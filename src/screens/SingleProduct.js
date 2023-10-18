@@ -8,17 +8,34 @@ import axios from "axios";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import {listProductDetail } from "../Redux/Actions/ProductActions";
+import { useNavigate } from "react-router-dom";
+
 
 const SingleProduct = ({ match }) => {
   //const [product, setProduct] = useState({});
   const dispatch = useDispatch();
+  const [qty,setQty]=useState(1);
   const productId=useParams();
   const productsDetail = useSelector((state) => state.productsDetail);
   const {loading,error,product }=productsDetail;
+  let history = useNavigate();
+
 
   useEffect(() => {
   dispatch(listProductDetail(productId))
   }, [dispatch, productId]);
+  console.log(productId,'productId');
+
+  const AddToCartHandle=(e)=>{
+    e.preventDefault();
+    history(`/cart/${productId}?qty=${qty}`)
+    // if (history && history.push) {
+    //   history.push(`/cart/${productId}?qty=${qty}`);
+    // } else {
+    //  console.log('undefined',history)
+    // }
+  
+  }
 
   return (
     <>
@@ -66,7 +83,7 @@ const SingleProduct = ({ match }) => {
                     ))}
                   </select>
                 </div>
-                <button>agregar al carrito</button>
+                <button onClick={AddToCartHandle}>agregar al carrito</button>
               </>
             ) : null}
           </div>
