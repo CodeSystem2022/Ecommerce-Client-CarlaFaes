@@ -23,7 +23,7 @@ function App() {
           <Route path="/login" Component={Login} />
           <Route path="/register" Component={Register} />
           <Route path="/profile" Component={ProfileScreen} />
-          <Route path="/cart/:id" Component={CartToScreen} />
+          <Route path="/cart/:id?" Component={CartToScreen} />
           <Route path="/shipping" Component={ShippingScreen} />
           <Route path="/payment" Component={PaymentScreen} />
           <Route path="/placeorder" Component={PlaceOrderScreen} />

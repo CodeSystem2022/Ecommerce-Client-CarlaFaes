@@ -34,44 +34,41 @@ const CartToScreen = () => {
           <>
             <div>
               Total de productos en el carrito
-              <Link to="/cart">(4)</Link>
+              <Link to="/cart">{cartItems.length}</Link>
             </div>
-            <div>
-              <div>
-                <i></i>
-              </div>
-              <div>
-                <img
-                  src="https://d1ih8jugeo2m5m.cloudfront.net/2021/12/ejemplos-de-paginas-web-20-1024x575.jpg"
-                  alt="nike"
-                />
-              </div>
-              <div>
-                <Link to="#">
-                  <h4>mueble de ejemplo</h4>
-                </Link>
-              </div>
-              <div>
-                <h6>cantidad</h6>
-              
-              </div>
-              <div>
-                <h6>subtotal</h6>
-                <h4>$$$</h4>
-              </div>
+            {cartItems.map((item) => (
+              <>
+                <div>
+                  <div>
+                    <img src={item.image} alt={cartItems.name} />
+                  </div>
+                  <div>
+                    <Link to={`/product/${item.product}`}>
+                      <h4>{item.name}</h4>
+                    </Link>
+                  </div>
+                  <div>
+                    <h6>cantidad</h6>
+                  </div>
+                  <div>
+                    <h6>subtotal</h6>
+                    <h4>$$$</h4>
+                  </div>
 
-              {/*find de los items del carrito*/}
-              <div>
-                <span>total:</span>
-                <span>$567</span>
-              </div>
-              <hr />
-              <div>
-                <button>
-                  <Link to="/shipping">pagar</Link>
-                </button>
-              </div>
-            </div>
+                  {/*find de los items del carrito*/}
+                  <div>
+                    <span>total:</span>
+                    <span>$567</span>
+                  </div>
+                  <hr />
+                  <div>
+                    <button>
+                      <Link to="/shipping">pagar</Link>
+                    </button>
+                  </div>
+                </div>
+              </>
+            ))}
           </>
         )}
       </div>
