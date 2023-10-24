@@ -3,9 +3,8 @@ import Header from "../components/Header";
 import { Link, useLocation } from "react-router-dom";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../Redux/Actions/CartAction";
+import { addToCart, removeFromCart } from "../Redux/Actions/CartAction";
 import { useNavigate } from "react-router-dom";
-
 
 const CartToScreen = () => {
   window.scrollTo(0, 0);
@@ -17,7 +16,7 @@ const CartToScreen = () => {
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-  
+
   //total:suma los valores de todos los elementos en el carrito de compras, teniendo en cuenta la cantidad y el precio de cada elemento, y devuelve el resultado con dos decimales como una cadena de texto. El resultado se almacena en la variable total.
   const total = cartItems
     .reduce((ttl, item) => ttl + item.qty * item.price, 0)
@@ -31,11 +30,15 @@ const CartToScreen = () => {
     }
   }, [dispatch, id, qty]);
 
-  const checkOutHandler=()=>{
+  const checkOutHandler = () => {
     history("/login?redirect=shipping");
-  }
+  };
 
-  const removeFromCartHandler=()=>{}
+  const removeFromCartHandler = (id,e) => {
+   // e.preventDefault();
+    dispatch(removeFromCart(id));
+  };
+
   return (
     <>
       <div>
@@ -54,7 +57,7 @@ const CartToScreen = () => {
               <>
                 <div>
                   <div>
-                    <button onClick={()=> removeFromCartHandler()}>
+                    <button key={item._id} onClick={() => removeFromCartHandler(item.product)}>
                       x
                     </button>
                   </div>
@@ -77,7 +80,7 @@ const CartToScreen = () => {
                       }
                     >
                       {[...Array(item.countInStock).keys()].map((x) => (
-                        <option key={x + 1} value={x + 1}>
+                        <option key={item.id} value={x + 1}>
                           {x + 1}
                         </option>
                       ))}
@@ -87,9 +90,11 @@ const CartToScreen = () => {
                     <h6>Precio</h6>
                     <h4>${item.price}</h4>
                   </div>
-
-                  {/*find de los items del carrito*/}
-                  <div>
+                </div>
+              </>
+            ))}
+                   {/*find de los items del carrito*/}
+                   <div>
                     <span>Total:</span>
                     <span>${total}</span>
                   </div>
@@ -102,15 +107,10 @@ const CartToScreen = () => {
                     </div>
                     {total > 0 && (
                       <div>
-                        <button onClick={checkOutHandler}>
-                          Ir a pagar
-                        </button>
+                        <button onClick={checkOutHandler}>Ir a pagar</button>
                       </div>
                     )}
                   </div>
-                </div>
-              </>
-            ))}
           </>
         )}
       </div>
