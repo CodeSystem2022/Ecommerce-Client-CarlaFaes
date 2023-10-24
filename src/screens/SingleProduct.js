@@ -3,39 +3,31 @@ import Header from "../components/Header";
 import Rating from "../components/homeComponents/Rating";
 import { Link } from "react-router-dom";
 import Message from "../components/LoadingError/Error";
-import Loading from '../components/LoadingError/Loading'
+import Loading from "../components/LoadingError/Loading";
 import axios from "axios";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import {listProductDetail } from "../Redux/Actions/ProductActions";
+import { listProductDetail } from "../Redux/Actions/ProductActions";
 import { useNavigate } from "react-router-dom";
-
 
 const SingleProduct = ({ match }) => {
   //const [product, setProduct] = useState({});
   const dispatch = useDispatch();
-  const [qty,setQty]=useState(1);
-  const productId=useParams();
+  const [qty, setQty] = useState(1);
+  const productId = useParams();
   const productsDetail = useSelector((state) => state.productsDetail);
-  const {loading,error,product }=productsDetail;
+  const { loading, error, product } = productsDetail;
   let history = useNavigate();
 
-
   useEffect(() => {
-  dispatch(listProductDetail(productId))
+    dispatch(listProductDetail(productId));
   }, [dispatch, productId]);
-  console.log(productId,'productId');
+  console.log(productId.id, "productId");
 
-  const AddToCartHandle=(e)=>{
+  const AddToCartHandle = (e) => {
     e.preventDefault();
-    history(`/cart/${productId}?qty=${qty}`)
-    // if (history && history.push) {
-    //   history.push(`/cart/${productId}?qty=${qty}`);
-    // } else {
-    //  console.log('undefined',history)
-    // }
-  
-  }
+    history(`/cart/${productId.id}?qty=${qty}`);
+  };
 
   return (
     <>
@@ -75,7 +67,7 @@ const SingleProduct = ({ match }) => {
               <>
                 <div>
                   <h6>Cantidad</h6>
-                  <select>
+                  <select value={qty} onChange={(e)=>setQty(e.target.value)}>
                     {[...Array(product.countInStock).keys()].map((x) => (
                       <option key={x + 1} value={x + 1}>
                         {x + 1}
@@ -87,7 +79,7 @@ const SingleProduct = ({ match }) => {
               </>
             ) : null}
           </div>
-           {/* Rating */}
+          {/* Rating */}
           <div>
             <div>
               <h6>Reviews</h6>
