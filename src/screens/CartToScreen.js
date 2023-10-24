@@ -49,6 +49,20 @@ const CartToScreen = () => {
                   </div>
                   <div>
                     <h6>cantidad</h6>
+                    <select
+                      value={item.qty}
+                      onChange={(e) =>
+                        dispatch(
+                          addToCart(item.product, Number(e.target.value))
+                        )
+                      }
+                    >
+                      {[...Array(item.countInStock).keys()].map((x) => (
+                        <option key={x + 1} value={x + 1}>
+                          {x + 1}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <div>
                     <h6>subtotal</h6>

@@ -24,6 +24,7 @@ const store = configureStore({
   reducer: rootReducer,
   middleware: [thunk],
   devTools: process.env.NODE_ENV !== 'production' ? composeWithDevTools() : false,
+  preloadedState: initialState, 
 });
 
 export default store;
