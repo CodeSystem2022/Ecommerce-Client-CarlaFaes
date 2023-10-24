@@ -5,6 +5,7 @@ import Pagination from "./Pagination";
 import Loading from'../LoadingError/Loading'
 import Message from'../LoadingError/Error'
 import { listProduct } from "../../Redux/Actions/ProductActions";
+import { Link, useLocation } from "react-router-dom";
 
 const ShopSection = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,9 @@ const ShopSection = () => {
             products.map((product) => (
               <div key={product.id}>
                 <img src={product.image} alt="img_" />
+                <Link to={`/product/${product._id}`}>
                 <p>{product.name}</p>
+                </Link>
               </div>
             ))
           ) : (

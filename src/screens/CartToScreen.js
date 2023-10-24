@@ -4,6 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../Redux/Actions/CartAction";
+import { useNavigate } from "react-router-dom";
+
 
 const CartToScreen = () => {
   window.scrollTo(0, 0);
@@ -11,9 +13,15 @@ const CartToScreen = () => {
   const location = useLocation();
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
   const dispatch = useDispatch();
+  let history = useNavigate();
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  
+  //total:suma los valores de todos los elementos en el carrito de compras, teniendo en cuenta la cantidad y el precio de cada elemento, y devuelve el resultado con dos decimales como una cadena de texto. El resultado se almacena en la variable total.
+  const total = cartItems
+    .reduce((ttl, item) => ttl + item.qty * item.price, 0)
+    .toFixed(2);
 
   useEffect(() => {
     if (id) {
@@ -22,6 +30,12 @@ const CartToScreen = () => {
       console.log("error en cartToScreen");
     }
   }, [dispatch, id, qty]);
+
+  const checkOutHandler=()=>{
+    history("/login?redirect=shipping");
+  }
+
+  const removeFromCartHandler=()=>{}
   return (
     <>
       <div>
@@ -39,6 +53,11 @@ const CartToScreen = () => {
             {cartItems.map((item) => (
               <>
                 <div>
+                  <div>
+                    <button onClick={()=> removeFromCartHandler()}>
+                      x
+                    </button>
+                  </div>
                   <div>
                     <img src={item.image} alt={cartItems.name} />
                   </div>
@@ -65,20 +84,29 @@ const CartToScreen = () => {
                     </select>
                   </div>
                   <div>
-                    <h6>subtotal</h6>
-                    <h4>$$$</h4>
+                    <h6>Precio</h6>
+                    <h4>${item.price}</h4>
                   </div>
 
                   {/*find de los items del carrito*/}
                   <div>
-                    <span>total:</span>
-                    <span>$567</span>
+                    <span>Total:</span>
+                    <span>${total}</span>
                   </div>
                   <hr />
                   <div>
-                    <button>
-                      <Link to="/shipping">pagar</Link>
-                    </button>
+                    <div>
+                      <button>
+                        <Link to="/">Continuar comprando</Link>
+                      </button>
+                    </div>
+                    {total > 0 && (
+                      <div>
+                        <button onClick={checkOutHandler}>
+                          Ir a pagar
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </>
