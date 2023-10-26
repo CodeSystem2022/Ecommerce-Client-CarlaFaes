@@ -1,30 +1,45 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { combineReducers } from '@reduxjs/toolkit';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { productDetailReducer, productListReducer } from './Reducers/ProductsReducer';
-import { cartReducer } from './Reducers/CartReducers';
+import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers } from "@reduxjs/toolkit";
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+import {
+  productDetailReducer,
+  productListReducer,
+} from "./Reducers/ProductsReducer";
+import { cartReducer } from "./Reducers/CartReducers";
+import { userLoginReducer } from "./Reducers/userReducer";
 
 const rootReducer = combineReducers({
-  productList:productListReducer,
-  productsDetail:productDetailReducer,
+  productList: productListReducer,
+  productsDetail: productDetailReducer,
   cart: cartReducer,
-  
+  userLogin: userLoginReducer,
 });
 
-const cartItemsFromLocalStore = localStorage.getItem("cartItems")? JSON.parse(localStorage.getItem("cartItems")) :[];
+//carrito
+const cartItemsFromLocalStore = localStorage.getItem("cartItems")
+  ? JSON.parse(localStorage.getItem("cartItems"))
+  : [];
+//login
+const userInfoFromLocalStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
+  : null;
 
-const initialState={
-  cart:{
+const initialState = {
+  cart: {
     cartItems: cartItemsFromLocalStore,
-  }
-}
+  },
+  userLogin: {
+    userInfo: userInfoFromLocalStorage,
+  },
+};
 
 const store = configureStore({
   reducer: rootReducer,
   middleware: [thunk],
-  devTools: process.env.NODE_ENV !== 'production' ? composeWithDevTools() : false,
-  preloadedState: initialState, 
+  devTools:
+    process.env.NODE_ENV !== "production" ? composeWithDevTools() : false,
+  preloadedState: initialState,
 });
 
 export default store;
