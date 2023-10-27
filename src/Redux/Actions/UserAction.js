@@ -2,8 +2,10 @@ import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCES,
+  USER_LOGOUT,
 } from "../Constants/UserContents";
 import axios from "axios";
+//import { Link, useLocation } from "react-router-dom";
 
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -31,3 +33,11 @@ export const login = (email, password) => async (dispatch) => {
     });
   }
 };
+
+//logout
+export const logout =()=> (dispatch) => {
+  //const location = useLocation();
+  localStorage.removeItem("userInfo")
+  dispatch({type:USER_LOGOUT})
+  document.location.href="/login";
+}

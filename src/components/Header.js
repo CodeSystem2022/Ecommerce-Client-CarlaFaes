@@ -1,14 +1,17 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { logout } from "../Redux/Actions/UserAction";
 
 const Header = () => {
+  const dispatch= useDispatch()
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const logoutHandler= ()=>{
     console.log("salio de la sesion")
+    dispatch(logout())
   }
 
   return (
