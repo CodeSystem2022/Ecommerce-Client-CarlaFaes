@@ -15,7 +15,7 @@ const Register=()=>{
 
     const dispatch=useDispatch();
     const location = useLocation();
-    const redirect=location.search?location.searchsplit("=")[1]:"/"
+    const redirect=location.search?location.search.split("=")[1]:"/"
 
     const userRegister=useSelector((state)=> state.userRegister);
     const {error, loading, userInfo}=userRegister;

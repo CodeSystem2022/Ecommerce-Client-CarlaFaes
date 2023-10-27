@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import moment from "moment";
 import Header from "../components/Header";
-import ProfileTabs from "../components/profileComponents/ProfileTabs";
+import ProfileTabs from "../components/profileComponents/ProfileTabs.js";
 import Orders from "../components/profileComponents/Orders";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "../Redux/Actions/UserAction";
@@ -12,6 +12,7 @@ window.scrollTo(0,0);
 const dispatch=useDispatch()
 const userLogin= useSelector((state)=> state.userLogin)
 const {userInfo}=userLogin
+console.log(userInfo,'userInfo')
 
 useEffect(()=>{
     dispatch(getUserDetails("profile"))
@@ -20,6 +21,7 @@ useEffect(()=>{
 return(
     <>
         <Header/>
+        <ProfileTabs/>
         <div>
             <div>
                 <img src="" alt="userprofileimage"/>
@@ -33,7 +35,7 @@ return(
                 </span>
             </div>
             <div>
-                <ProfileTabs/>
+
             </div>
             <div id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <button 
@@ -63,4 +65,4 @@ return(
     </>
 )
 }
-export default ProfileScreen;;
+export default ProfileScreen;

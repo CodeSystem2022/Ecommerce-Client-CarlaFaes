@@ -2,6 +2,7 @@ import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
   USER_DETAILS_RESET,
+  USER_DETAILS_SUCCES,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCES,
@@ -87,10 +88,8 @@ export const register = (name, email, password) => async (dispatch) => {
 export const getUserDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_DETAILS_REQUEST });
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
+    const {userLogin: { userInfo }} = getState();
+    console.log(userInfo, "userLogin");
     const config = {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
@@ -98,7 +97,10 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(`/api/users/${id}`, config);
-    dispatch({ type: USER_REGISTER_SUCCES, payload: data });
+    console.log(data, "data userAction");
+    dispatch({ type: USER_REGISTER_SUCCES, payload: data },console.log(data));
+    dispatch({ type: USER_DETAILS_SUCCES, payload: data },console.log(data,'details'));
+
   } catch (error) {
     let message =
       error.response && error.response.data.message
@@ -119,9 +121,9 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   try {
     dispatch({ type: USER_UPDATED_PROFILE_REQUEST });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+    //const {updateLoading: { userInfo }} = getState();
+    const {userLogin: { userInfo }} = getState();
+
     const config = {
       headers: {
         "Content-Type": "application/json",
@@ -129,6 +131,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.put(`/api/users/profile`, user, config);
+    console.log(data, "data uderupdate profile action");
     dispatch({ type: USER_UPDATED_PROFILE_SUCCES, payload: data });
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
@@ -140,8 +143,8 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       dispatch(logout());
     }
     dispatch({
-      type:USER_UPDATED_PROFILE_FAIL,
-      payload:message,
-    })
+      type: USER_UPDATED_PROFILE_FAIL,
+      payload: message,
+    });
   }
 };

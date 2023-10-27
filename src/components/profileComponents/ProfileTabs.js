@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Toast from "../LoadingError/Toast";
 import { toast } from "react-toastify";
+import { updateUserProfile } from "../../Redux/Actions/UserAction.js";
+import Loading from "../LoadingError/Loading.js";
+import Message from "../LoadingError/Error.js";
 
 const ProfileTabs = () => {
   const [name, setName] = useState("");
@@ -13,8 +16,15 @@ const ProfileTabs = () => {
 
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
+ // console.log(userDetails, "user details");
+
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { loading: updateLoading } = userUpdateProfile;
+  //console.log(loading, "userUpdate linea 23");
+  console.log(updateLoading , "updateLoading ");
 
   const toastId = React.useRef(null);
+   
   const toastObjects = {
     pauseOnFocusLoss: false,
     draggable: false,
@@ -40,13 +50,19 @@ const ProfileTabs = () => {
         );
       }
     } else {
-      alert("las contraseñas coinciden");
+      dispatch(updateUserProfile({ id: user._id, name, email, password }));
+      //console.log(userUpdateProfile, "updateUserProfile profile");
+      if (!toast.isActive(toastId.current)) {
+        toastId.current = toast.success("Se guardo exitosamente", toastObjects);
+      }
     }
   };
   return (
     <>
       <Toast />
-
+      {error && <Message variant="alert-danger">{error}</Message>}
+      {loading && <Loading />}
+      {updateLoading && <Loading />}
       <form onSubmit={submitHandler}>
         <div>
           <div>
@@ -61,7 +77,7 @@ const ProfileTabs = () => {
         </div>
         <div>
           <div>
-            <label>Email addres</label>
+            <label>Correo electronico</label>
             <input
               type="email"
               required
@@ -72,7 +88,7 @@ const ProfileTabs = () => {
         </div>
         <div>
           <div>
-            <label for="account-pass">Contraseña nueva</label>
+            <label htmlFor="account-pass">Contraseña nueva</label>
             <input
               type="password"
               value={password}
@@ -82,7 +98,7 @@ const ProfileTabs = () => {
         </div>
         <div>
           <div>
-            <label for="account-confirm-pass"> Confirmar contraseña</label>
+            <label htmlFor="account-confirm-pass"> Confirmar contraseña</label>
             <input
               type="password"
               value={confirmPassword}
