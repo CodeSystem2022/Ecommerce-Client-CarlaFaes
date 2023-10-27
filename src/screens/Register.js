@@ -23,7 +23,6 @@ const Register=()=>{
 
     useEffect(()=>{
         if(userInfo){
-            //history.push(redirect)
             history(redirect);
         }
       },[userInfo,history,redirect])
