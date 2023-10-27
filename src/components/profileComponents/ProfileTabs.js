@@ -33,10 +33,12 @@ const ProfileTabs = () => {
     e.preventDefault();
     //comparacion de contraseñas
     if (password !== confirmPassword) {
-      toastId.current = toast.error(
-        "Las contraseñas no coinciden",
-        toastObjects
-      );
+      if (!toast.isActive(toastId.current)) {
+        toastId.current = toast.error(
+          "Las contraseñas no coinciden",
+          toastObjects
+        );
+      }
     } else {
       alert("las contraseñas coinciden");
     }

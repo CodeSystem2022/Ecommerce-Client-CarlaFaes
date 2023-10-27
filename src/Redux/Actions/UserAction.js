@@ -1,6 +1,7 @@
 import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
+  USER_DETAILS_RESET,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCES,
@@ -8,6 +9,9 @@ import {
   USER_REGISTER_FAIL,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCES,
+  USER_UPDATED_PROFILE_FAIL,
+  USER_UPDATED_PROFILE_REQUEST,
+  USER_UPDATED_PROFILE_SUCCES,
 } from "../Constants/UserContents";
 import axios from "axios";
 //import { Link, useLocation } from "react-router-dom";
@@ -45,6 +49,7 @@ export const logout = () => (dispatch) => {
   //const location = useLocation();
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
+  dispatch({ type: USER_DETAILS_RESET });
   document.location.href = "/login";
 };
 
@@ -87,22 +92,55 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     } = getState();
 
     const config = {
-      headers:{
-        Authorization:`Bearer ${userInfo.token}`
-      }
-    }
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
 
-    const {data}= await axios.get(`/api/users/${id}`,config);
-    dispatch({type:USER_REGISTER_SUCCES, payload:data});
+    const { data } = await axios.get(`/api/users/${id}`, config);
+    dispatch({ type: USER_REGISTER_SUCCES, payload: data });
   } catch (error) {
-    let message = error.response && error.response.data.message
-    ? error.response.data.message
-    : error.message;
-    if(message==="No autorizado, token fallido"){
-      dispatch(logout())
+    let message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "No autorizado, token fallido") {
+      dispatch(logout());
     }
     dispatch({
-      type:USER_DETAILS_FAIL,
+      type: USER_DETAILS_FAIL,
+      payload: message,
+    });
+  }
+};
+
+//editar perfil
+export const updateUserProfile = (user) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_UPDATED_PROFILE_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.put(`/api/users/profile`, user, config);
+    dispatch({ type: USER_UPDATED_PROFILE_SUCCES, payload: data });
+    localStorage.setItem("userInfo", JSON.stringify(data));
+  } catch (error) {
+    let message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === "No autorizado, token fallido") {
+      dispatch(logout());
+    }
+    dispatch({
+      type:USER_UPDATED_PROFILE_FAIL,
       payload:message,
     })
   }
