@@ -1,4 +1,6 @@
 import {
+  USER_DETAILS_FAIL,
+  USER_DETAILS_REQUEST,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCES,
@@ -62,6 +64,7 @@ export const register = (name, email, password) => async (dispatch) => {
       config
     );
     dispatch({ type: USER_REGISTER_SUCCES, payload: data });
+    dispatch({ type: USER_LOGIN_SUCCES, payload: data });
 
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
@@ -72,5 +75,35 @@ export const register = (name, email, password) => async (dispatch) => {
           ? error.response.data.message
           : error.message,
     });
+  }
+};
+
+//detalles de usuario
+export const getUserDetails = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_DETAILS_REQUEST });
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers:{
+        Authorization:`Bearer ${userInfo.token}`
+      }
+    }
+
+    const {data}= await axios.get(`/api/users/${id}`,config);
+    dispatch({type:USER_REGISTER_SUCCES, payload:data});
+  } catch (error) {
+    let message = error.response && error.response.data.message
+    ? error.response.data.message
+    : error.message;
+    if(message==="No autorizado, token fallido"){
+      dispatch(logout())
+    }
+    dispatch({
+      type:USER_DETAILS_FAIL,
+      payload:message,
+    })
   }
 };
