@@ -131,8 +131,9 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.put(`/api/users/profile`, user, config);
-    console.log(data, "data uderupdate profile action");
+    //console.log(data, "data uderupdate profile action");
     dispatch({ type: USER_UPDATED_PROFILE_SUCCES, payload: data });
+    dispatch({ type: USER_LOGIN_SUCCES, payload: data });
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
     let message =

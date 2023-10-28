@@ -35,9 +35,9 @@ const initialState = {
   userLogin: {
     userInfo: userInfoFromLocalStorage,
   },
-  updateLogin: {
-    userInfo: userInfoFromLocalStorage,
-  },
+  // updateLogin: {
+  //   userInfo: userInfoFromLocalStorage,
+  // },
 };
 
 const store = configureStore({
