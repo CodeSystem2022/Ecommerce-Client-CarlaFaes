@@ -1,4 +1,3 @@
-import ShopSection from "./components/homeComponents/ShopSection";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomeScreen from "./screens/HomeScreen";
@@ -26,7 +25,7 @@ function App() {
           <Route path="/cart/:id?" Component={CartToScreen} />
           <Route path="/shipping" Component={ShippingScreen} />
           <Route path="/payment" Component={PaymentScreen} />
-          <Route path="/placeorder" Component={PlaceOrderScreen} />
+          <Route path="/placeOrder" Component={PlaceOrderScreen} />
           <Route path="/order" Component={OrderScreen} />
           <Route path="*" Component={NotFound} />
         </Routes>

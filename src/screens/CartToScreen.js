@@ -16,6 +16,7 @@ const CartToScreen = () => {
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  console.log(cartItems,'cartItem')
 
   //total:suma los valores de todos los elementos en el carrito de compras, teniendo en cuenta la cantidad y el precio de cada elemento, y devuelve el resultado con dos decimales como una cadena de texto. El resultado se almacena en la variable total.
   const total = cartItems
@@ -102,7 +103,7 @@ const CartToScreen = () => {
                   <div>
                     <div>
                       <button>
-                        <Link to="/">Continuar comprando</Link>
+                        <Link to="/shipping">Continuar comprando</Link>
                       </button>
                     </div>
                     {total > 0 && (

@@ -4,7 +4,6 @@ import Rating from "../components/homeComponents/Rating";
 import { Link } from "react-router-dom";
 import Message from "../components/LoadingError/Error";
 import Loading from "../components/LoadingError/Loading";
-import axios from "axios";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { listProductDetail } from "../Redux/Actions/ProductActions";

@@ -1,16 +1,27 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Header from "../components/Header";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { saveShippingAddress } from "../Redux/Actions/CartAction";
 
 const ShippingScreen = () => {
   window.scrollTo(0, 0);
 
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [country, setCountry] = useState("");
+  const cart = useSelector((state) => state.cart);
+  const { shippingAddress } = cart;
+
+  const [address, setAddress] = useState(shippingAddress.address);
+  const [city, setCity] = useState(shippingAddress.city);
+  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
+  const [country, setCountry] = useState(shippingAddress.country);
+  console.log(shippingAddress, "shippingAddress");
+  let history = useNavigate();
+
+  const dispatch = useDispatch();
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(saveShippingAddress({ address, city, postalCode, country }));
+    history("/payment");
   };
 
   return (
@@ -44,9 +55,7 @@ const ShippingScreen = () => {
             value={country}
             onChange={(e) => setCountry(e.target.value)}
           />
-          <button type="submit">
-            <Link to="/payment">Continuar</Link>
-          </button>
+          <button type="submit">Continuar</button>
         </form>
       </div>
     </>
