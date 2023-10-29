@@ -26,7 +26,7 @@ function App() {
           <Route path="/shipping" Component={ShippingScreen} />
           <Route path="/payment" Component={PaymentScreen} />
           <Route path="/placeOrder" Component={PlaceOrderScreen} />
-          <Route path="/order" Component={OrderScreen} />
+          <Route path="/order/:id" Component={OrderScreen} />
           <Route path="*" Component={NotFound} />
         </Routes>
       </BrowserRouter>

@@ -32,7 +32,12 @@ const CartToScreen = () => {
   }, [dispatch, id, qty]);
 
   const checkOutHandler = () => {
-    history("/login?redirect=shipping");
+    if (cartItems.length > 0) {
+      console.log(cartItems, 'cartItems checkOutHandler')
+      history("/login?redirect=/shipping");
+    } else {
+      console.log("No se redirigió porque el carrito está vacío");
+    }
   };
 
   const removeFromCartHandler = (id,e) => {
@@ -103,14 +108,16 @@ const CartToScreen = () => {
                   <div>
                     <div>
                       <button>
-                        <Link to="/shipping">Continuar comprando</Link>
+                        <Link to="/">Continuar comprando</Link>
                       </button>
                     </div>
+                    <div>
                     {total > 0 && (
                       <div>
                         <button onClick={checkOutHandler}>Ir a pagar</button>
                       </div>
                     )}
+                    </div>
                   </div>
           </>
         )}

@@ -8,6 +8,7 @@ import {
 } from "./Reducers/ProductsReducer";
 import { cartReducer } from "./Reducers/CartReducers";
 import { userDetailsReducer, userLoginReducer, userRegisterReducer, userUpdateProfileReducer } from "./Reducers/userReducer";
+import { orderCreateReducer } from "./Reducers/OrderReducer";
 
 const rootReducer = combineReducers({
   productList: productListReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   userRegister: userRegisterReducer,
   userDetails:userDetailsReducer,
   userUpdateProfile:userUpdateProfileReducer,
+  orderCreate: orderCreateReducer,
 });
 
 //carrito

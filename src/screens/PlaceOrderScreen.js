@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/LoadingError/Error";
+import { useNavigate } from "react-router-dom";
+import { ORDER_CREATE_RESET } from "../Redux/Constants/OrderConstants";
+import { createOrder } from "../Redux/Actions/OrderAction";
 
 const PlaceOrderScreen = () => {
   window.scrollTo(0, 0);
@@ -10,24 +13,49 @@ const PlaceOrderScreen = () => {
   const cart = useSelector((state) => state.cart);
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+  let history = useNavigate();
 
   ///calcular precio
   const addDecimal = (num) => {
     return (Math.round(num * 100) / 100).toFixed(2);
-  };//toma un número (num) como argumento y devuelve ese número redondeado a dos decimales.
+  }; //toma un número (num) como argumento y devuelve ese número redondeado a dos decimales.
 
   cart.itemsPrice = addDecimal(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-  );//calcula el precio total de los elementos en el carrito de compras, lo redondea a dos decimales y almacena el resultado en la propiedad cart.itemsPrice
+  ); //calcula el precio total de los elementos en el carrito de compras, lo redondea a dos decimales y almacena el resultado en la propiedad cart.itemsPrice
 
-  cart.shippingPrice= addDecimal(cart.itemsPrice > 1000?0:500)//calcula el precio de envío basado en el precio total de los elementos en el carrito. Si el precio total de los elementos en el carrito es mayor que 1000, el envío es gratuito (0), de lo contrario, se cobra un costo de envío de 500. Se almacena en cart.shippingPrice
+  cart.shippingPrice = addDecimal(cart.itemsPrice > 1000 ? 0 : 500); //calcula el precio de envío basado en el precio total de los elementos en el carrito. Si el precio total de los elementos en el carrito es mayor que 1000, el envío es gratuito (0), de lo contrario, se cobra un costo de envío de 500. Se almacena en cart.shippingPrice
 
-  cart.taxPrice= addDecimal(Number((0.15* cart.itemsPrice).toFixed(2)))// calcula el valor del impuesto como el 15% del precio total de los elementos en el carrito, redondea el resultado a dos decimales y lo almacena en la propiedad cart.taxPrice
+  cart.taxPrice = addDecimal(Number((0.15 * cart.itemsPrice).toFixed(2))); // calcula el valor del impuesto como el 15% del precio total de los elementos en el carrito, redondea el resultado a dos decimales y lo almacena en la propiedad cart.taxPrice
 
-  cart.totalPrice=(Number(cart.itemsPrice)+Number(cart.shippingPrice)+ Number(cart.taxPrice)).toFixed(2);
-  
+  cart.totalPrice = (
+    Number(cart.itemsPrice) +
+    Number(cart.shippingPrice) +
+    Number(cart.taxPrice)
+  ).toFixed(2);
+
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error } = orderCreate;
+
+  useEffect(() => {
+    if (success) {
+      history(`/order/${order._id}`);
+      dispatch({ type: ORDER_CREATE_RESET });
+    }
+  }, [history, dispatch, success, order]);
   const placeOrderHandler = (e) => {
     e.preventDefault();
+    dispatch(
+      createOrder({
+        orderItems: cart.cartItems,
+        shippingAddress: cart.shippingAddress,
+        paymentMethod: cart.paymentMethod,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
   };
 
   return (
@@ -105,7 +133,7 @@ const PlaceOrderScreen = () => {
                   <strong>Envio</strong>
                 </td>
                 <td>
-                  <td>${cart.shippingPrice}</td>
+                  <p>${cart.shippingPrice}</p>
                 </td>
               </tr>
               <tr>
@@ -123,7 +151,14 @@ const PlaceOrderScreen = () => {
             </tbody>
           </table>
           {cart.cartItems.length === 0 ? null : (
-            <button type="submit">Realizar pedido</button>
+            <button type="submit" onClick={placeOrderHandler}>
+              Realizar pedido
+            </button>
+          )}
+          {error && (
+            <>
+              <Message variant="alert-danger">{error}</Message>
+            </>
           )}
         </div>
       </div>
