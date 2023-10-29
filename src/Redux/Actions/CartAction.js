@@ -4,7 +4,7 @@ import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_PAYMENT_METHOD, CART_SAVE_SH
 //agregar elementos al carrito
 export const addToCart=(id,qty)=> async(dispatch, getState)=>{
     const {data}= await axios.get(`/api/products/${id}`);
-
+    console.log(data,'data de addtocart action')
     dispatch({
         type: CART_ADD_ITEM,
         payload:{

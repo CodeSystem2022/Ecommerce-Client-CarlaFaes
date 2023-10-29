@@ -13,6 +13,9 @@ const CartToScreen = () => {
   const qty = location.search ? Number(location.search.split("=")[1]) : 1;
   const dispatch = useDispatch();
   let history = useNavigate();
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+  console.log(userInfo,'userInfo')
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -32,11 +35,11 @@ const CartToScreen = () => {
   }, [dispatch, id, qty]);
 
   const checkOutHandler = () => {
-    if (cartItems.length > 0) {
-      console.log(cartItems, 'cartItems checkOutHandler')
-      history("/login?redirect=/shipping");
-    } else {
+    if (!userInfo) {
       console.log("No se redirigió porque el carrito está vacío");
+    } else {
+      console.log(cartItems, 'cartItems checkOutHandler')
+      history("/shipping");
     }
   };
 
@@ -111,10 +114,11 @@ const CartToScreen = () => {
                         <Link to="/">Continuar comprando</Link>
                       </button>
                     </div>
+                    {" continuous"}
                     <div>
                     {total > 0 && (
                       <div>
-                        <button onClick={checkOutHandler}>Ir a pagar</button>
+                        <button onClick={()=>checkOutHandler()}>Ir a pagar</button>
                       </div>
                     )}
                     </div>
