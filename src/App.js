@@ -11,6 +11,7 @@ import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import NotFound from "./screens/NotFound";
+import OrderId from "./screens/OrderId";
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
           <Route path="/shipping" Component={ShippingScreen} />
           <Route path="/payment" Component={PaymentScreen} />
           <Route path="/placeOrder" Component={PlaceOrderScreen} />
-          <Route path="/order/:id" Component={OrderScreen} />
+          <Route path="/order" Component={OrderScreen} />
+          <Route path="/order/:id?" Component={OrderId} />
           <Route path="*" Component={NotFound} />
         </Routes>
       </BrowserRouter>
