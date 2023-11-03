@@ -9,8 +9,8 @@ import Message from "../components/LoadingError/Error";
 const OrderScreen = () => {
   window.scrollTo(0, 0);
   const orderDetails = useSelector((state) => state.orderDetails);
-  const { order, loading, error } = orderDetails;
   const { id } = useParams();
+  const { order, loading, error } = orderDetails;
   console.log(id,'id')
   //const orderId = _id;
   const dispatch = useDispatch();

@@ -28,8 +28,8 @@ const ShopSection = () => {
           <>
           PRODUCTOS
           {products ? (
-            products.map((product) => (
-              <div key={product.id}>
+            products.map((product,index) => (
+              <div key={index}>
                 <img src={product.image} alt="img_" />
                 <Link to={`/product/${product._id}`}>
                 <p>{product.name}</p>

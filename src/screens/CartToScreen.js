@@ -63,9 +63,9 @@ const CartToScreen = () => {
               Total de productos en el carrito
               <Link to="/cart">{cartItems.length}</Link>
             </div>
-            {cartItems.map((item) => (
-              <>
-                <div>
+            {cartItems.map((item,index) => (
+              
+                <div key={index}>
                   <div>
                     <button key={item._id} onClick={() => removeFromCartHandler(item.product)}>
                       x
@@ -101,7 +101,7 @@ const CartToScreen = () => {
                     <h4>${item.price}</h4>
                   </div>
                 </div>
-              </>
+              
             ))}
                    {/*find de los items del carrito*/}
                    <div>

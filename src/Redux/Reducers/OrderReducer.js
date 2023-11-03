@@ -32,7 +32,7 @@ export const orderDetailsReducer = (
 ) => {
   switch (action.type) {
     case ORDER_DETAILS_REQUEST:
-      return { ...state, order: action.payload };
+      return { ...state, loading: true};
     case ORDER_DETAILS_SUCCESS:
       return { loading: false, order: action.payload };
     case ORDER_DETAILS_FAIL:
