@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Header from "../components/Header";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { getOrderDetails } from "../Redux/Actions/OrderAction";
+import { getOrderDetails, payOrder } from "../Redux/Actions/OrderAction";
 import Loading from "../components/LoadingError/Loading";
 import Message from "../components/LoadingError/Error";
 
@@ -11,13 +11,15 @@ const OrderScreen = () => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { id } = useParams();
   const { order, loading, error } = orderDetails;
-  console.log(id,'id')
+  console.log(id, "id");
   //const orderId = _id;
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getOrderDetails(id));
   }, [dispatch, id]);
+
+
   return (
     <>
       <Header />
