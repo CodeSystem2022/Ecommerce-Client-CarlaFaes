@@ -12,11 +12,13 @@ import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import NotFound from "./screens/NotFound";
 import OrderId from "./screens/OrderId";
+import { PayPalScriptProvider} from "@paypal/react-paypal-js";
 
 
 function App() {
   return (
     <div>
+      {/* <PayPalScriptProvider options={{"client-id":"AVrcnJr0-ydoHXt5zCcQW-7qMAqsfFfyB9LvH1r5ql-qk9T-NIVAa6274hkIBnW9oGsgDl0Sd4YHvxTY"}}>  */}
       <BrowserRouter>
         <Routes>
           <Route path="/" Component={HomeScreen} exact />
@@ -33,6 +35,7 @@ function App() {
           <Route path="*" Component={NotFound} />
         </Routes>
       </BrowserRouter>
+      {/* </PayPalScriptProvider> */}
     </div>
   );
 }

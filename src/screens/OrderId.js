@@ -16,15 +16,15 @@ const OrderId = () => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const [sdkReady, setSdkReady] = useState(false);
   const orderPay = useSelector((state) => state.orderPay);
-  console.log(orderPay, "ordder pay");
   const { loading: loadingPay, success: successPay } = orderPay;
   const { id } = useParams();
   const { order, loading, error } = orderDetails;
 
   const dispatch = useDispatch();
-  useEffect(() => {
-    const fetchPaypalClientId = async () => {
+  const fetchPaypalClientId = async () => {
+    try {
       const { data: clientId } = await axios.get("/api/config/paypal");
+      console.log(clientId, "clientid");
       const script = document.createElement("script");
       script.type = "text/javascript";
       script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
@@ -32,14 +32,26 @@ const OrderId = () => {
       script.onload = () => {
         setSdkReady(true);
       };
+      // Configurar un evento de error para el script
+      script.onerror = () => {
+        setSdkReady(true); // En caso de error al cargar el script, también marca sdkReady como true
+      };
       document.body.appendChild(script);
-    };
+    } catch (error) {
+      console.log("Error al obtener el clientId de PayPal");
+      setSdkReady(true);
+    }
+  };
+  useEffect(() => {
     if (id) {
       if (!order || successPay) {
+        console.log("se ejecuta primer if");
         dispatch({ type: ORDER_PAY_RESET });
         dispatch(getOrderDetails(id));
       } else if (!order.isPaid && !sdkReady) {
+        console.log("se ejecuta segundo if");
         fetchPaypalClientId();
+        console.log("sdkREady", sdkReady);
       }
     }
   }, [dispatch, id, successPay, order, sdkReady]);
@@ -48,7 +60,7 @@ const OrderId = () => {
     console.log(paymentResult, "payment");
     dispatch(payOrder(id, paymentResult));
   };
-
+  console.log("orderpay",orderPay)
   if (order) {
     const addDecimal = (num) => {
       return (Math.round(num * 100) / 100).toFixed(2);
@@ -60,14 +72,15 @@ const OrderId = () => {
   } else {
     return <Loading />;
   }
+  console.log("order", order);
 
   return (
     <>
       <PayPalScriptProvider
-        options={{
-          clientId:
-            "AVrcnJr0-ydoHXt5zCcQW-7qMAqsfFfyB9LvH1r5ql-qk9T-NIVAa6274hkIBnW9oGsgDl0Sd4YHvxTY",
-        }}
+      options={{
+        clientId:
+          "AVrcnJr0-ydoHXt5zCcQW-7qMAqsfFfyB9LvH1r5ql-qk9T-NIVAa6274hkIBnW9oGsgDl0Sd4YHvxTY",
+      }}
       >
         <Header />
         {loading ? (
@@ -195,9 +208,33 @@ const OrderId = () => {
                     </tr>
                   </tbody>
                 </table>
+                {/* <div>
+                  <PaypalButtonCheckout/>
+                </div> */}
                 <PayPalButtons
-                  amount={order.totalPrice}
-                  onSuccess={successPaymentHandler}
+                  // amount={order.totalPrice}
+                  // onSuccess={successPaymentHandler}
+                  style={{
+                    color: "silver",
+                    layout: "vertical",
+                    shape: "pill",
+                  }}
+                  
+                  createOrder={(data, actions) => {
+                    return actions.order.create({
+                      purchase_units: [
+                        {
+                          description: order.orderItems.name,
+                          amount: { value: order.totalPrice },
+                        },
+                      ],
+                    });
+                  }}
+                  onApprove={async (data, actions) => {
+                    const order = await actions.order.capture();
+                    console.log("order", order);
+                    successPaymentHandler();
+                  }}
                 />
               </div>
             </div>

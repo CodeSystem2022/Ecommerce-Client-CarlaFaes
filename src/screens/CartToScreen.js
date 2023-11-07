@@ -115,7 +115,6 @@ const CartToScreen = () => {
                         <Link to="/">Continuar comprando</Link>
                       </button>
                     </div>
-                    {" continuous"}
                     <div>
                     {total > 0 && (
                       <div>
