@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import moment from "moment";
+import "moment/locale/es"; // Importa el idioma español
 import { getOrderDetails, payOrder } from "../Redux/Actions/OrderAction";
 import Loading from "../components/LoadingError/Loading";
 import Message from "../components/LoadingError/Error";
@@ -19,30 +20,33 @@ const OrderId = () => {
   const { loading: loadingPay, success: successPay } = orderPay;
   const { id } = useParams();
   const { order, loading, error } = orderDetails;
-
   const dispatch = useDispatch();
-  const fetchPaypalClientId = async () => {
-    try {
-      const { data: clientId } = await axios.get("/api/config/paypal");
-      console.log(clientId, "clientid");
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
-      script.async = true;
-      script.onload = () => {
-        setSdkReady(true);
-      };
-      // Configurar un evento de error para el script
-      script.onerror = () => {
-        setSdkReady(true); // En caso de error al cargar el script, también marca sdkReady como true
-      };
-      document.body.appendChild(script);
-    } catch (error) {
-      console.log("Error al obtener el clientId de PayPal");
-      setSdkReady(true);
-    }
-  };
+  const [isPaid, setIsPaid] = useState(false); // Agrega un estado isPaid
+  const ref = useRef(false);
+
   useEffect(() => {
+    const fetchPaypalClientId = async () => {
+      try {
+        const { data: clientId } = await axios.get("/api/config/paypal");
+        console.log(clientId, "clientid");
+        const script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`;
+        script.async = true;
+        script.onload = () => {
+          setSdkReady(true);
+          console.log("Sdk ready", sdkReady);
+        };
+        // Configurar un evento de error para el script
+        script.onerror = () => {
+          setSdkReady(true); // En caso de error al cargar el script, también marca sdkReady como true
+        };
+        document.body.appendChild(script);
+      } catch (error) {
+        console.log("Error al obtener el clientId de PayPal");
+        setSdkReady(true);
+      }
+    };
     if (id) {
       if (!order || successPay) {
         console.log("se ejecuta primer if");
@@ -51,16 +55,28 @@ const OrderId = () => {
       } else if (!order.isPaid && !sdkReady) {
         console.log("se ejecuta segundo if");
         fetchPaypalClientId();
+        setSdkReady(true);
         console.log("sdkREady", sdkReady);
       }
     }
   }, [dispatch, id, successPay, order, sdkReady]);
 
+  // useEffect(() => {
+  //   if (order) {
+  //     if (order.isPaid) {
+  //       console.log("se ejecuta se useRef", ref.current);
+  //       ref.current = true;
+  //       setIsPaid(true);
+  //       console.log("isPaid", ref.current,isPaid);
+  //     }
+  //   }
+  // }, [order,isPaid]);
+
   const successPaymentHandler = (paymentResult) => {
     console.log(paymentResult, "payment");
     dispatch(payOrder(id, paymentResult));
+    renderer()
   };
-  console.log("orderpay",orderPay)
   if (order) {
     const addDecimal = (num) => {
       return (Math.round(num * 100) / 100).toFixed(2);
@@ -72,15 +88,27 @@ const OrderId = () => {
   } else {
     return <Loading />;
   }
+  const renderer= (order)=>{
+    if (order) {
+      if (order.isPaid) {
+        console.log("se ejecuta se useRef", ref.current);
+        ref.current = true;
+        setIsPaid(true);
+        console.log("isPaid", ref.current,isPaid);
+      }
+    }
+  }
+  console.log("orderpay", orderPay);
   console.log("order", order);
+  console.log("succes", orderPay.success);
 
   return (
     <>
       <PayPalScriptProvider
-      options={{
-        clientId:
-          "AVrcnJr0-ydoHXt5zCcQW-7qMAqsfFfyB9LvH1r5ql-qk9T-NIVAa6274hkIBnW9oGsgDl0Sd4YHvxTY",
-      }}
+        options={{
+          clientId:
+            "AVrcnJr0-ydoHXt5zCcQW-7qMAqsfFfyB9LvH1r5ql-qk9T-NIVAa6274hkIBnW9oGsgDl0Sd4YHvxTY",
+        }}
       >
         <Header />
         {loading ? (
@@ -121,9 +149,11 @@ const OrderId = () => {
                   </h5>
                   <p>{order.paymentMethod}</p>
                 </div>
-                {order.isPaid ? (
+                {order && order.isPaid ? (
                   <>
-                    <div>Pagado en {moment(order.paidAt.calendar())}</div>
+                    <div>
+                      Pagado en {moment(order.paidAt).locale("es").format("LL")}
+                    </div>
                   </>
                 ) : (
                   <>
@@ -131,14 +161,18 @@ const OrderId = () => {
                   </>
                 )}
               </div>
+
               <div>
                 <h5>
                   <strong>Estado de entrega de envio:</strong>
                 </h5>
-                {order.isDelivered ? (
+                {order && order.isDelivered ? (
                   <>
                     <div>
-                      <p>Entregado el {moment(order.deliveredAt).calendar()}</p>
+                      <p>
+                        Entregado el{" "}
+                        {moment(order.deliveredAt).locale("es").format("LL")}
+                      </p>
                     </div>
                   </>
                 ) : (
@@ -208,23 +242,19 @@ const OrderId = () => {
                     </tr>
                   </tbody>
                 </table>
-                {/* <div>
-                  <PaypalButtonCheckout/>
-                </div> */}
                 <PayPalButtons
-                  // amount={order.totalPrice}
-                  // onSuccess={successPaymentHandler}
                   style={{
                     color: "silver",
                     layout: "vertical",
                     shape: "pill",
                   }}
-                  
                   createOrder={(data, actions) => {
                     return actions.order.create({
                       purchase_units: [
                         {
-                          description: order.orderItems.name,
+                          description: order.orderItems
+                            .map((item) => item.name)
+                            .join(", "),
                           amount: { value: order.totalPrice },
                         },
                       ],
@@ -232,13 +262,12 @@ const OrderId = () => {
                   }}
                   onApprove={async (data, actions) => {
                     const order = await actions.order.capture();
-                    console.log("order", order);
-                    successPaymentHandler();
+                    console.log("order capture", order);
+                    successPaymentHandler(data);
                   }}
                 />
               </div>
             </div>
-            <button>otro</button>
           </>
         )}
       </PayPalScriptProvider>
