@@ -22,7 +22,7 @@ const ShopSection = (props) => {
 
   console.log(products, "products");
   return (
-    <div>
+    <div  className="flex flex-col items-center  gap-8 shadow bg-primary  text-secondary p-5 w-full left-0 ">
       {loading ? (
         <Loading />
       ) : error ? (
@@ -32,11 +32,13 @@ const ShopSection = (props) => {
           PRODUCTOS
           {products ? (
             products.map((product, index) => (
-              <div key={index}>
-                <img src={product.image} alt="img_" />
+              <div className="grid grid-flow-col grid-cols-2 gap-6 shadow md:bg-secondary text-secondary">
+              <div key={index} className="shadow-md hover:grid-cols-2 transition-800">
+                <img className="w-48" src={product.image} alt="img_" />
                 <Link to={`/product/${product._id}`}>
                   <p>{product.name}</p>
                 </Link>
+              </div>
               </div>
             ))
           ) : (

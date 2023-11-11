@@ -14,6 +14,7 @@ import NotFound from "./screens/NotFound";
 import OrderId from "./screens/OrderId";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { useSelector } from "react-redux";
+import './index.css';
 
 function App() {
   const userLogin = useSelector((state) => state.userLogin);
