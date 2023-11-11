@@ -13,7 +13,6 @@ const Header = () => {
   let history = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-  const keywordString = keyword.toString().trim();
 
   const logoutHandler = () => {
     console.log("salio de la sesion");
