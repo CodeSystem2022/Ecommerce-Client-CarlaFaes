@@ -29,6 +29,7 @@ function App() {
           <Route path="/login" Component={Login} />
           }
           <Route path="/" Component={HomeScreen} exact />
+          <Route path="/search/:keywords" Component={HomeScreen} exact />
           <Route path="/product/:id" Component={SingleProduct} />
           <Route path="/register" Component={Register} />
           <Route path="/cart/:id?" Component={CartToScreen} />

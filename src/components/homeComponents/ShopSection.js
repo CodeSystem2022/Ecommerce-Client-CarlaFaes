@@ -7,16 +7,18 @@ import Message from'../LoadingError/Error'
 import { listProduct } from "../../Redux/Actions/ProductActions";
 import { Link, useLocation } from "react-router-dom";
 
-const ShopSection = () => {
+const ShopSection = ( props) => {
+  const {keywords}=props;
+  console.log(keywords,"keyword")
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
 
   useEffect(() => {
     // listProduct()
-    console.log(productList, "productlist");
-    dispatch(listProduct());
-  }, []);
+    //console.log(productList, "productlist");
+    dispatch(listProduct(keywords));
+  }, [keywords,dispatch]);
 
   console.log(products, "products");
   return (
