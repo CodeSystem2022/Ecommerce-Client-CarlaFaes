@@ -14,12 +14,12 @@ import {
 import { logout } from "./UserAction";
 
 //accion asincronica para enviar los datos que se traen de la API
-export const listProduct = (keywords=" ") => async (dispatch) => {
+export const listProduct = (keywords=" ", pageNumber=" ") => async (dispatch) => {
   try {
     dispatch({
       type: PRODUCT_LIST_REQUEST,
     });
-    const { data } = await axios.get(`/api/products?keywords=${keywords}`);
+    const { data } = await axios.get(`/api/products?keywords=${keywords}&pageNumber=${pageNumber}`);
     console.log(data, "data de listProducts");
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
