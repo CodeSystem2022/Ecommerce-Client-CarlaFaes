@@ -17,7 +17,7 @@ import "./index.css";
 
 function App() {
   return (
-    <div>
+    <div className="bg-[#b3c5cd]">
       {/* <PayPalScriptProvider options={{"client-id":"AVrcnJr0-ydoHXt5zCcQW-7qMAqsfFfyB9LvH1r5ql-qk9T-NIVAa6274hkIBnW9oGsgDl0Sd4YHvxTY"}}>  */}
       <BrowserRouter>
         <Routes>

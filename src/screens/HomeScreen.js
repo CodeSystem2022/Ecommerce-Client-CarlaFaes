@@ -12,7 +12,7 @@ const HomeScreen = () => {
     const {pageNumber}=useParams()
     console.log(keywords, "keyword de homescreen","page number",pageNumber)
   return (
-    <div >
+    <div  className='mx-auto'>
         <Header/>
         <ShopSection keywords={keywords} pageNumber={pageNumber}/>
         <CallToActionSection/>
