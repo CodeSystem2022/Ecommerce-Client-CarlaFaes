@@ -8,7 +8,7 @@ import Message from "../LoadingError/Error.js";
 import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
-import InputLabel from "@mui/material/InputLabel";
+
 
 const ProfileTabs = () => {
   const [name, setName] = useState("");

@@ -8,9 +8,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "../Redux/Actions/UserAction";
 import { Container } from "@mui/material";
 import Box from "@mui/material/Box";
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 
 const ProfileScreen = () => {
   window.scrollTo(0, 0);
