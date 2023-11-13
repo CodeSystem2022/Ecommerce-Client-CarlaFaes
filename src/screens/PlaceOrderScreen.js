@@ -66,9 +66,9 @@ const PlaceOrderScreen = () => {
     <>
       <Header />
       <Container fixed>
-        <Box sx={{ bgcolor: "#b3c5cd" }}>
+        <Box sx={{ bgcolor: "#b3c5cd", minHeight: "100vh" }}>
           <div>
-            <div className="bg-red-200 flex flex-row justify-center items-center mt-3">
+            <div className="flex flex-row justify-center items-center mt-3">
               <p className="font-bold text-xl leading-none text-primary mb-4">
                 Detalle de factura
               </p>
@@ -112,7 +112,12 @@ const PlaceOrderScreen = () => {
             </div>
             <div>
               {cart.cartItems.length < 0 ? (
-                <Message variant="alert">Tu carrito esta vacio</Message>
+                <Message variant="alert">
+                  {" "}
+                  <p className="font-semibold font-[Poppins] text-lg leading-none text-primary">
+                    Tu carrito esta vacio
+                  </p>
+                </Message>
               ) : (
                 <>
                   <div className="overflow-y-auto h-72">
@@ -122,29 +127,29 @@ const PlaceOrderScreen = () => {
                         className="grid mb-2 sm:grid-cols-1 md:grid-cols-1"
                       >
                         <div className="flex flex-row justify-evenly items-center">
-                        <div>
-                          <img
-                            className="max-w-20 max-h-36 rounded-full mx-4"
-                            src={item.image}
-                            alt={item.name}
-                          />
-                        </div>
-                        <div className="flex flex-col items-center justify-evenly h-full">
-                          <Link to={`/products/${item.product}`}>
-                            <h5 className="font-serif italic">{item.name}</h5>
-                          </Link>
                           <div>
-                            <p className="font-serif italic">
-                              Cantidad: {item.qty}
-                            </p>
+                            <img
+                              className="max-w-20 max-h-36 rounded-full mx-1"
+                              src={item.image}
+                              alt={item.name}
+                            />
                           </div>
-                          <div>
-                            <p className="font-serif italic">
-                              Subtotal: {item.qty * item.price}
-                            </p>
+                          <div className="flex flex-col items-center justify-evenly h-full">
+                            <Link to={`/products/${item.product}`}>
+                              <h5 className="font-serif italic">{item.name}</h5>
+                            </Link>
+                            <div>
+                              <p className="font-serif italic">
+                                Cantidad: {item.qty}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="font-serif italic">
+                                Subtotal: {item.qty * item.price}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
                       </div>
                     ))}
                   </div>
@@ -153,42 +158,62 @@ const PlaceOrderScreen = () => {
             </div>
             <div>
               {/* total */}
-              <table  className="w-full mt-3">
+              <table className="w-full mt-3">
                 <tbody className="w-full justify-center items-normal ">
                   <tr className="border border-primary">
-                    <td >
-                      <strong className="font-serif text-xl leading-none text-primary mb-4">Productos:</strong>
-                    </td>
-                    <td className="font-serif italic font-lg">${cart.itemsPrice}</td>
-                  </tr>
-                  <tr className="border border-primary">
                     <td>
-                      <strong className="font-serif text-xl leading-none text-primary mb-4">Envio:</strong>
+                      <strong className="font-serif text-xl leading-none text-primary mb-4">
+                        Productos:
+                      </strong>
                     </td>
-                    <td>
-                      <p className="font-serif italic font-lg">${cart.shippingPrice}</p>
+                    <td className="font-serif italic font-lg">
+                      ${cart.itemsPrice}
                     </td>
                   </tr>
                   <tr className="border border-primary">
                     <td>
-                      <strong className="font-serif text-xl leading-none text-primary mb-4">Impuesto:</strong>
+                      <strong className="font-serif text-xl leading-none text-primary mb-4">
+                        Envio:
+                      </strong>
                     </td>
-                    <td className="font-serif italic font-lg">${cart.taxPrice}</td>
+                    <td>
+                      <p className="font-serif italic font-lg">
+                        ${cart.shippingPrice}
+                      </p>
+                    </td>
                   </tr>
                   <tr className="border border-primary">
                     <td>
-                      <strong className="font-serif text-xl leading-none text-primary mb-4">Total:</strong>
+                      <strong className="font-serif text-xl leading-none text-primary mb-4">
+                        Impuesto:
+                      </strong>
                     </td>
-                    <td className="font-serif italic font-lg">${cart.totalPrice}</td>
+                    <td className="font-serif italic font-lg">
+                      ${cart.taxPrice}
+                    </td>
+                  </tr>
+                  <tr className="border border-primary">
+                    <td>
+                      <strong className="font-serif text-xl leading-none text-primary mb-4">
+                        Total:
+                      </strong>
+                    </td>
+                    <td className="font-serif italic font-lg">
+                      ${cart.totalPrice}
+                    </td>
                   </tr>
                 </tbody>
               </table>
               {cart.cartItems.length === 0 ? null : (
-                 <div className="flex flex-row justify-center items-center">
-                 <Button type="submit" onClick={placeOrderHandler} variant="outlined">
-                 Realizar pedido
-                 </Button>
-                 </div>
+                <div className="flex flex-row justify-center items-center mt-4">
+                  <Button
+                    type="submit"
+                    onClick={placeOrderHandler}
+                    variant="outlined"
+                  >
+                    Realizar pedido
+                  </Button>
+                </div>
               )}
               {error && (
                 <>

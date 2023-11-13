@@ -11,6 +11,8 @@ import { FaWindowClose } from "react-icons/fa";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import compras from "../utils/carritocart.png";
+import Button from "@mui/material/Button";
+
 
 const CartToScreen = () => {
   window.scrollTo(0, 0);
@@ -165,25 +167,25 @@ const CartToScreen = () => {
                 ))}
                 </div>
                 {/*find de los items del carrito*/}
-                <div className="bg-red-200 relative">
+                <div className="mt-3 relative">
                   <div className="object-bottom inset-x-0 bottom-0">
                   <div>
-                  <span>Total:</span>
-                  <span>${total}</span>
+                  <span className="w-full mb-3 font-normal font-[Poppins] text-lg leading-none text-primary">Total:</span>
+                  <span className="font-bold text-xl leading-none text-primary"> ${total}</span>
                 </div>
                 <hr />
-                <div>
+                <div className="flex flex-row justify-around items-center">
                   <div>
-                    <button>
+                    <Button variant="outlined">
                       <Link to="/">Continuar comprando</Link>
-                    </button>
+                    </Button>
                   </div>
                   <div>
                     {total > 0 && (
                       <div>
-                        <button onClick={() => checkOutHandler()}>
+                        <Button variant="outlined" onClick={() => checkOutHandler()}>
                           Ir a pagar
-                        </button>
+                        </Button>
                       </div>
                     )}
                   </div>
