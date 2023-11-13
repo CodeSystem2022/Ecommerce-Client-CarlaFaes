@@ -4,6 +4,7 @@ import ShopSection from "../components/homeComponents/ShopSection"
 import ContactInfo from "../components/homeComponents/ContactInfo"
 import CallToActionSection from "../components/homeComponents/CallToActionSection"
 import { useParams } from "react-router";
+import { Container } from '@mui/material'
 
 
 const HomeScreen = () => {
@@ -14,9 +15,11 @@ const HomeScreen = () => {
   return (
     <div  className='mx-auto'>
         <Header/>
+        <Container fixed>
         <ShopSection keywords={keywords} pageNumber={pageNumber}/>
         <CallToActionSection/>
         <ContactInfo/>
+        </Container>
     </div>
   )
 }

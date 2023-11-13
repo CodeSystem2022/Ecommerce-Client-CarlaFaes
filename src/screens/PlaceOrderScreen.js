@@ -6,6 +6,9 @@ import Message from "../components/LoadingError/Error";
 import { useNavigate } from "react-router-dom";
 import { ORDER_CREATE_RESET } from "../Redux/Constants/OrderConstants";
 import { createOrder } from "../Redux/Actions/OrderAction";
+import { Container } from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 const PlaceOrderScreen = () => {
   window.scrollTo(0, 0);
@@ -43,7 +46,7 @@ const PlaceOrderScreen = () => {
       dispatch({ type: ORDER_CREATE_RESET });
     }
   }, [history, dispatch, success, order]);
-  
+
   const placeOrderHandler = (e) => {
     e.preventDefault();
     dispatch(
@@ -62,107 +65,140 @@ const PlaceOrderScreen = () => {
   return (
     <>
       <Header />
-      <div>
-        <div>
+      <Container fixed>
+        <Box sx={{ bgcolor: "#b3c5cd" }}>
           <div>
-            <i></i>
-          </div>
-          <div>
-            <h5>
-              <strong>Datos del comprador</strong>
-            </h5>
-            <p>Nombre y apellido:{userInfo.name}</p>
-            <p>Email:{userInfo.email}</p>
-          </div>
-          <div>
-            <h5>
-              <strong>Informacion de pedido</strong>
-            </h5>
-            {/* <p>envio: {cart.shippingAddress.country}</p> */}
-            <p>Metodo de pago:{cart.paymentMethod}</p>
-          </div>
-        </div>
-        <div>
-          <div>
-            <h5>
-              <strong>Enviar a:</strong>
-            </h5>
-            <p>Direccion: {cart.shippingAddress.address}</p>
-            <p>Localidad: {cart.shippingAddress.city}</p>
-            <p>Codigo Postal: {cart.shippingAddress.postalCode}</p>
-            <p>Pais: {cart.shippingAddress.country}</p>
-          </div>
-        </div>
-        <div>
-          {cart.cartItems.length < 0 ? (
-            <Message variant="alert">Tu carrito esta vacio</Message>
-          ) : (
-            <>
-              {cart.cartItems.map((item, index) => (
-                <div key={index}>
-                  <div>
-                    <img src={item.image} alt={item.name} />
+            <div className="bg-red-200 flex flex-row justify-center items-center mt-3">
+              <p className="font-bold text-xl leading-none text-primary mb-4">
+                Detalle de factura
+              </p>
+            </div>
+            <div className="grid grid-cols-3 justify-center items-center">
+              <div>
+                <h5 className="font-serif text-xl leading-none text-primary mb-4">
+                  <strong>Datos del comprador</strong>
+                </h5>
+                <p className="font-serif italic">
+                  Nombre y apellido:{userInfo.name}
+                </p>
+                <p className="font-serif italic">Email:{userInfo.email}</p>
+              </div>
+              <div>
+                <h5 className="font-serif text-xl leading-none text-primary mb-4">
+                  <strong>Informacion de pedido</strong>
+                </h5>
+                {/* <p>envio: {cart.shippingAddress.country}</p> */}
+                <p className="font-serif italic">
+                  Metodo de pago:{cart.paymentMethod}
+                </p>
+              </div>
+              <div>
+                <h5 className="font-serif text-xl leading-none text-primary mb-4">
+                  <strong>Enviar a:</strong>
+                </h5>
+                <p className="font-serif italic">
+                  Direccion: {cart.shippingAddress.address}
+                </p>
+                <p className="font-serif italic">
+                  Localidad: {cart.shippingAddress.city}
+                </p>
+                <p className="font-serif italic">
+                  Codigo Postal: {cart.shippingAddress.postalCode}
+                </p>
+                <p className="font-serif italic">
+                  Pais: {cart.shippingAddress.country}
+                </p>
+              </div>
+            </div>
+            <div>
+              {cart.cartItems.length < 0 ? (
+                <Message variant="alert">Tu carrito esta vacio</Message>
+              ) : (
+                <>
+                  <div className="overflow-y-auto h-72">
+                    {cart.cartItems.map((item, index) => (
+                      <div
+                        key={index}
+                        className="grid mb-2 sm:grid-cols-1 md:grid-cols-1"
+                      >
+                        <div className="flex flex-row justify-evenly items-center">
+                        <div>
+                          <img
+                            className="max-w-20 max-h-36 rounded-full mx-4"
+                            src={item.image}
+                            alt={item.name}
+                          />
+                        </div>
+                        <div className="flex flex-col items-center justify-evenly h-full">
+                          <Link to={`/products/${item.product}`}>
+                            <h5 className="font-serif italic">{item.name}</h5>
+                          </Link>
+                          <div>
+                            <p className="font-serif italic">
+                              Cantidad: {item.qty}
+                            </p>
+                          </div>
+                          <div>
+                            <p className="font-serif italic">
+                              Subtotal: {item.qty * item.price}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      </div>
+                    ))}
                   </div>
-                  <div>
-                    <Link to={`/products/${item.product}`}>
-                      <h5>{item.name}</h5>
-                    </Link>
-                  </div>
-                  <div>
-                    <p>cantidad: {item.qty}</p>
-                  </div>
-                  <div>
-                    <p>subtotal: {item.qty * item.price}</p>
-                  </div>
-                </div>
-              ))}
-            </>
-          )}
-        </div>
-        <div>
-          {/* total */}
-          <table>
-            <tbody>
-              <tr>
-                <td>
-                  <strong>Productos</strong>
-                </td>
-                <td>${cart.itemsPrice}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Envio</strong>
-                </td>
-                <td>
-                  <p>${cart.shippingPrice}</p>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Impuesto</strong>
-                </td>
-                <td>${cart.taxPrice}</td>
-              </tr>
-              <tr>
-                <td>
-                  <strong>Total</strong>
-                </td>
-                <td>${cart.totalPrice}</td>
-              </tr>
-            </tbody>
-          </table>
-          {cart.cartItems.length === 0 ? null : (
-            <button type="submit" onClick={placeOrderHandler}>
-              Realizar pedido
-            </button>
-          )}
-          {error && (
-            <>
-              <Message variant="alert-danger">{error}</Message>
-            </>
-          )}
-        </div>
-      </div>
+                </>
+              )}
+            </div>
+            <div>
+              {/* total */}
+              <table  className="w-full mt-3">
+                <tbody className="w-full justify-center items-normal ">
+                  <tr className="border border-primary">
+                    <td >
+                      <strong className="font-serif text-xl leading-none text-primary mb-4">Productos:</strong>
+                    </td>
+                    <td className="font-serif italic font-lg">${cart.itemsPrice}</td>
+                  </tr>
+                  <tr className="border border-primary">
+                    <td>
+                      <strong className="font-serif text-xl leading-none text-primary mb-4">Envio:</strong>
+                    </td>
+                    <td>
+                      <p className="font-serif italic font-lg">${cart.shippingPrice}</p>
+                    </td>
+                  </tr>
+                  <tr className="border border-primary">
+                    <td>
+                      <strong className="font-serif text-xl leading-none text-primary mb-4">Impuesto:</strong>
+                    </td>
+                    <td className="font-serif italic font-lg">${cart.taxPrice}</td>
+                  </tr>
+                  <tr className="border border-primary">
+                    <td>
+                      <strong className="font-serif text-xl leading-none text-primary mb-4">Total:</strong>
+                    </td>
+                    <td className="font-serif italic font-lg">${cart.totalPrice}</td>
+                  </tr>
+                </tbody>
+              </table>
+              {cart.cartItems.length === 0 ? null : (
+                 <div className="flex flex-row justify-center items-center">
+                 <Button type="submit" onClick={placeOrderHandler} variant="outlined">
+                 Realizar pedido
+                 </Button>
+                 </div>
+              )}
+              {error && (
+                <>
+                  <Message variant="alert-danger">{error}</Message>
+                </>
+              )}
+            </div>
+          </div>
+        </Box>
+      </Container>
     </>
   );
 };

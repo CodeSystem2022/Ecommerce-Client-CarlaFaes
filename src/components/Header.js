@@ -5,7 +5,7 @@ import { logout } from "../Redux/Actions/UserAction";
 import { useNavigate } from "react-router-dom";
 import { BsCartFill } from "react-icons/bs";
 import { FcSearch } from "react-icons/fc";
-import logo_icono from "../utils/Muebles Express (1).png"
+import logo_icono from "../utils/logo.png"
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ const Header = () => {
       <div className="flex justify-between items-center p-2 sticky top-0 bg-[#2f4556]  z-10">
         <div>
           <Link to="/">
-         <img src={logo_icono} alt="icono" className="w-24 rounded-lg"/>
+         <img src={logo_icono} alt="icono" className="w-28 h-24 rounded-lg"/>
           </Link>
         </div>
         <div className="flex flex-row justify-start items-center container max-w-full">

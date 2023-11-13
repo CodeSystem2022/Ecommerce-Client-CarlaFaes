@@ -1,16 +1,42 @@
 import React from "react";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
+import { Container } from "@mui/material";
+import Box from "@mui/material/Box";
 
-const Loading=()=>{
-    return(
-        <div className="d-flex justify-content-center">
-            <div 
-            className="spinner-border text-succes" 
-            role="status" 
-            style={{ width:"50px", height:"50px"}}>
-                <span className="sr-only">Loading...</span>
-            </div>
-        </div>
-    )
-}
+const Loading = () => {
+  return (
+      <Container fixed>
+        <Box sx={{ bgcolor: "#b3c5cd", height: "100vh", width:"100vh" }}>
+          <Stack spacing={2}>
+              <Skeleton
+                sx={{ bgcolor: "[#587382]" }}
+                variant="text"
+                width={"100vh"}
+                height={100}
+              />
+              <Skeleton
+                sx={{ bgcolor: "[#587382]" }}
+                variant="rounded"
+                width={"100vh"}
+                height={100}
+              />
+            <Skeleton
+              sx={{ bgcolor: "[#587382]" }}
+              variant="rounded"
+              width={"100vh"}
+              height={100}
+            />
+            <Skeleton
+              sx={{ bgcolor: "[#587382]" }}
+              variant="rounded"
+              width={"100vh"}
+              height={100}
+            />
+          </Stack>
+        </Box>
+      </Container>
+  );
+};
 
 export default Loading;

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Rating from "./Rating";
 import Pagination from "./Pagination";
 import Loading from "../LoadingError/Loading";
 import Message from "../LoadingError/Error";
 import { listProduct } from "../../Redux/Actions/ProductActions";
-import { Link, useLocation } from "react-router-dom";
+import { Link} from "react-router-dom";
+import { Container } from "@mui/material";
+import Box from "@mui/material/Box";
 
 const ShopSection = (props) => {
   const { keywords, pageNumber } = props;
@@ -22,12 +23,14 @@ const ShopSection = (props) => {
 
   console.log(products, "products");
   return (
-    <div className="container mx-auto">
+    <div className="">
+      <Container fixed>
+      <Box sx={{ bgcolor: "#b3c5cd"}}>
      <h5 className="flex flex-row justify-center text-primary w-full text-lg font-bold">CATALOGO DE PRODUCTOS</h5> 
-      <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8 text-secondary p-5 w-full left-0 ">
+      <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8 text-secondary ">
         {loading ? (
           <Loading />
-        ) : error ? (
+        )  : error ? (
           <Message variant="alert-danger">{error}</Message>
         ) : (
           <>
@@ -53,7 +56,7 @@ const ShopSection = (props) => {
                 </div>
               ))
             ) : (
-              <p>no hay</p>
+              <Loading />
             )}
           </>
         )}
@@ -63,6 +66,8 @@ const ShopSection = (props) => {
         page={page}
         keywords={keywords ? keywords : ""}
       />
+      </Box>
+      </Container>
     </div>
   );
 };
