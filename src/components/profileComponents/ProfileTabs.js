@@ -5,6 +5,10 @@ import { toast } from "react-toastify";
 import { updateUserProfile } from "../../Redux/Actions/UserAction.js";
 import Loading from "../LoadingError/Loading.js";
 import Message from "../LoadingError/Error.js";
+import FormControl from "@mui/material/FormControl";
+import Button from "@mui/material/Button";
+import Input from "@mui/material/Input";
+import InputLabel from "@mui/material/InputLabel";
 
 const ProfileTabs = () => {
   const [name, setName] = useState("");
@@ -16,15 +20,15 @@ const ProfileTabs = () => {
 
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
- // console.log(userDetails, "user details");
+  // console.log(userDetails, "user details");
 
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   const { loading: updateLoading } = userUpdateProfile;
   //console.log(loading, "userUpdate linea 23");
-  console.log(updateLoading , "updateLoading ");
+  console.log(updateLoading, "updateLoading ");
 
   const toastId = React.useRef(null);
-   
+
   const toastObjects = {
     pauseOnFocusLoss: false,
     draggable: false,
@@ -57,57 +61,71 @@ const ProfileTabs = () => {
       }
     }
   };
+
   return (
     <>
       <Toast />
       {error && <Message variant="alert-danger">{error}</Message>}
       {loading && <Loading />}
       {updateLoading && <Loading />}
-      <form onSubmit={submitHandler}>
-        <div>
-          <div>
-            <label>Nombre de usuario</label>
-            <input
-              type="text"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
+      <div>
+        <form
+          onSubmit={submitHandler}
+          className="flex flex-col justify-center items-center mt-6"
+        >
+          <FormControl>
+              <div className="m-3">
+                <Input
+                placeholder="Nombre de usuario"
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+          </FormControl>
+          <FormControl>
+            <div>
+              <div className="m-3">
+                <Input
+                placeholder="Correo electronico"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            </div>
+          </FormControl>
+          <FormControl>
+              <div className="m-3">
+                <Input
+                placeholder="Contraseña"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+          </FormControl>
+          <FormControl>
+            <div>
+              <div className="m-3">
+                <Input
+                placeholder="Confirmar contraseña"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+            </div>
+          </FormControl>
+          <div className="m-3">
+          <Button variant="outlined" type="submit">
+            Actualizar perfil
+          </Button>
           </div>
-        </div>
-        <div>
-          <div>
-            <label>Correo electronico</label>
-            <input
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-        </div>
-        <div>
-          <div>
-            <label htmlFor="account-pass">Contraseña nueva</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-        </div>
-        <div>
-          <div>
-            <label htmlFor="account-confirm-pass"> Confirmar contraseña</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </div>
-        </div>
-        <button type="submit">Actualizar perfil</button>
-      </form>
+        </form>
+      </div>
     </>
   );
 };

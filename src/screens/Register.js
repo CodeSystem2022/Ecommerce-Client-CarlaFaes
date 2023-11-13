@@ -9,7 +9,6 @@ import Loading from "../components/LoadingError/Loading";
 import { Container } from "@mui/material";
 import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
 import Button from "@mui/material/Button";
 import Input from "@mui/material/Input";
 
@@ -52,7 +51,7 @@ const Register = () => {
               <FormControl>
                 <Input
                   type="text"
-                  placeholder="username"
+                  placeholder="Nombre de usuario"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />

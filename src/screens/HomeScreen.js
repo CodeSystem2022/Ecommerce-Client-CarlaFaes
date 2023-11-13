@@ -17,8 +17,8 @@ const HomeScreen = () => {
         <Header/>
         <Container fixed>
         <ShopSection keywords={keywords} pageNumber={pageNumber}/>
-        <CallToActionSection/>
-        <ContactInfo/>
+        {/* <CallToActionSection/>
+        <ContactInfo/> */}
         </Container>
     </div>
   )

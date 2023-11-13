@@ -8,7 +8,7 @@ import "moment/locale/es"; // Importa el idioma español
 const Orders = (props) => {
   const { loading, error, orders } = props;
   return (
-    <div className="d-flex justify-content-center align-items-center flex-column">
+    <div >
       {loading ? (
         <Loading />
       ) : error ? (
@@ -22,8 +22,8 @@ const Orders = (props) => {
             </>
           ) : (
             <div className="table-responsive">
-              <table className="table">
-                <thead>
+              <table className="w-full mt-3">
+                <thead className="w-full justify-center items-normal border border-primary rounded-lg">
                   <tr>
                     <th>id</th>
                     <th>status</th>
@@ -33,23 +33,24 @@ const Orders = (props) => {
                 </thead>
                 {orders.map((order) => (
                   <>
-                    <tbody>
+                    <tbody className="w-full justify-center items-normal ">
                       <tr
+                      className="font-serif italic"
                          style={{
-                          backgroundColor: order.isPaid ? 'green' : 'red',
+                          backgroundColor: order.isPaid ? 'lightgreen' : 'red',
                         }}
                         key={order._id}
                       >
-                        <td>
+                        <td className="p-3 border border-gray-500">
                           <a href={`/order/${order._id}`}>{order._id}</a>
                         </td>
-                        <td>{order.isPaid ? <>Pagado</> : <>No pagado</>}</td>
-                        <td>
+                        <td className="p-3 border border-gray-500">{order.isPaid ? <>Pagado</> : <>No pagado</>}</td>
+                        <td className="p-3 border border-gray-500">
                           {order.isPaid
                             ? moment(order.paidAt).locale("es").format("LL")
                             : moment(order.createdAt).locale("es").format("LL")}
                         </td>
-                        <td>{order.totalPrice}</td>
+                        <td className="p-3 border border-gray-500">{order.totalPrice}</td>
                       </tr>
                     </tbody>
                   </>

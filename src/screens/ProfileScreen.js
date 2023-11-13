@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserDetails } from "../Redux/Actions/UserAction";
 import { Container } from "@mui/material";
 import Box from "@mui/material/Box";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
 
 const ProfileScreen = () => {
   window.scrollTo(0, 0);
@@ -31,48 +34,24 @@ const ProfileScreen = () => {
       <Container fixed>
         <Box sx={{ bgcolor: "#b3c5cd", height: "100vh" }}>
           <ProfileTabs />
-          <div>
-            <div>
-              <img src="" alt="userprofileimage" />
-            </div>
-            <div>
-              <h5>
+          <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-row justify-evenly">
+              <h5  className="w-full mb-3 font-normal font-[Poppins] text-lg leading-none text-primary">
                 <strong>{userInfo.name}</strong>
               </h5>
               <span>
                 <>Se unió en {moment(userInfo.createdAt).format("LL")}</>
               </span>
-            </div>
-            <div></div>
-            <div id="v-pills-tab" role="tablist" aria-orientation="vertical">
-              <button
-                id="v-pills-home-tab"
-                data-bs-target="#v-pills-home"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-home"
-                aria-selected="true"
-              >
-                Config perfil
-              </button>
-              <button
-                id="v-pills-profile-tab"
-                data-bs-toggle="pill"
-                data-bs-target="#v-pills-profile"
-                type="button"
-                role="tab"
-                aria-controls="v-pills-profile"
-                aria-selected="true"
-              >
-                Lista de pedidos{" "}
-                <span style={{ color: "red" }}>
+            </div>   
+            <div className="flex flex-row justify-center items-center">
+                <p className="w-full mb-3 font-normal font-[Poppins] text-lg leading-none text-primary">Lista de pedidos</p>
+                <span className="flex flex-row font-bold text-red-500 items-center justify-center w-14 bg-slate-400 rounded-full">
                   {orders ? orders.length : 0}
                 </span>
-              </button>
-            </div>
-          </div>
+              </div>   
           <div>
             <Orders orders={orders} loading={loading} error={error} />
+          </div>
           </div>
         </Box>
       </Container>

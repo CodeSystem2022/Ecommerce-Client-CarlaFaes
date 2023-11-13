@@ -77,7 +77,7 @@ export const createProductReview =
       };
      let data= await axios.post(`/api/products/${productId}/review`, review, config);
      console.log(data,"data");
-      dispatch({ type: PRODUCT_CREATE_REVIEW_SUCCES ,data});
+      dispatch({ type: PRODUCT_CREATE_REVIEW_SUCCES ,data,reviewData:data.data});
     } catch (error) {
       const message =
         error.response && error.response.data.message

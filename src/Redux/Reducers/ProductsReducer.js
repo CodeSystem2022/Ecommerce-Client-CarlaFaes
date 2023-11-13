@@ -68,7 +68,7 @@ export const productCreateReviewReducer = (state = {}, action) => {
     case PRODUCT_CREATE_REVIEW_REQUEST:
       return { loading: true };
     case PRODUCT_CREATE_REVIEW_SUCCES:
-      return { loading: false, success: true };
+      return { loading: false, success: true, reviewData: action.reviewData };
     case PRODUCT_CREATE_REVIEW_FAIL:
       return { loading: false, error: action.payload };
     case PRODUCT_CREATE_REVIEW_RESET:

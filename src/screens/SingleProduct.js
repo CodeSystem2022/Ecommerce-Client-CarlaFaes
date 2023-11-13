@@ -21,6 +21,8 @@ import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import { TextareaAutosize } from "@mui/material";
 import { Container } from "@mui/material";
+import Toast from "../components/LoadingError/Toast";
+import { toast } from "react-toastify";
 
 const SingleProduct = () => {
   //const [product, setProduct] = useState({});
@@ -32,7 +34,6 @@ const SingleProduct = () => {
   const productId = useParams();
   const productsDetail = useSelector((state) => state.productsDetail);
   const { loading, error, product } = productsDetail;
-  console.log(product, "product");
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const productReviewCreate = useSelector((state) => state.productReviewCreate);
@@ -40,17 +41,27 @@ const SingleProduct = () => {
     loading: loadingCreateReview,
     error: errorCreateReview,
     success: successCreateReview,
+    reviewData
   } = productReviewCreate;
-  console.log(productReviewCreate, "productReviewCreate");
+ 
+  const toastId = React.useRef(null);
+  const toastObjects = {
+    pauseOnFocusLoss: false,
+    draggable: false,
+    pauseOnHover: false,
+    autoClose: 2000,
+  };
   useEffect(() => {
     if (successCreateReview) {
-      alert("review enviada");
+      console.log("Success! reviewData:", reviewData);
+      //alert("review enviada");
       setRating(0);
       setComment("");
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+      succesReview();
     }
     dispatch(listProductDetail(productId));
-  }, [dispatch, productId, successCreateReview]);
+  }, [dispatch, productId, successCreateReview,reviewData]);
   console.log(productId.id, "productId");
 
   const AddToCartHandle = (e) => {
@@ -61,9 +72,18 @@ const SingleProduct = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(createProductReview(productId.id, { rating, comment }));
+    succesReview();
   };
+
+  const succesReview = () => {
+    if (!toast.isActive(toastId.current)) {
+      toastId.current = toast.success("Se guardo exitosamente", toastObjects);
+    }
+  };
+
   return (
     <>
+      <Toast />
       <Header />
       <Container fixed>
         {loading ? (
@@ -215,12 +235,12 @@ const SingleProduct = () => {
                               <MenuItem value={5}>5 - Excelente</MenuItem>
                             </Select>
                             <div className="h-full">
-                            <TextareaAutosize
-                              rowsMin={3}
-                              placeholder="Escribe tu comentario aquí"
-                              value={comment}
-                              onChange={(e) => setComment(e.target.value)}
-                            />
+                              <TextareaAutosize
+                                rowsMin={3}
+                                placeholder="Escribe tu comentario aquí"
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                              />
                             </div>
                             <Button
                               type="submit"
