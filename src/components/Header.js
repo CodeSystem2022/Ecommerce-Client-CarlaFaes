@@ -17,17 +17,13 @@ const Header = () => {
   const { userInfo } = userLogin;
 
   const logoutHandler = () => {
-    console.log("salio de la sesion");
     dispatch(logout());
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("Tipo de keyword antes de toString:", typeof keyword);
     const keywordString = keyword ? keyword.toString().trim() : "";
-    console.log("Tipo de keyword después de toString:", typeof keywordString);
     const url = `/search/${encodeURIComponent(keywordString)}`;
-    console.log("URL de búsqueda:", url);
     if (keywordString) {
       // history(`/search/${encodeURIComponent(keywordString)}`)
       history(url);
@@ -35,7 +31,7 @@ const Header = () => {
       history("/");
     }
   };
-  console.log("keyword", keyword);
+
   return (
     <>
       <div className="flex justify-between items-center p-2 sticky top-0 bg-[#2f4556]  z-10">
@@ -44,10 +40,10 @@ const Header = () => {
          <img src={logo_icono} alt="icono" className="w-28 h-24 rounded-lg"/>
           </Link>
         </div>
-        <div className="flex flex-row justify-start items-center container max-w-full">
+        <div className="flex flex-row justify-start items-center container max-w-full ">
           {userInfo ? (
             <div className="flex">
-              <ul className="md:flex md:items-center z-[-1] md:z-auto sm:z-auto md:static sm:static sm:flex sm:items-center sm:w-auto md:w-auto md:py-0 sm:py-0 md:pl-0 sm:pl-0 pl-7 py-4 absolute">
+              <ul className="md:flex md:items-center z-[-1] md:z-auto sm:z-auto md:static sm:static sm:flex sm:items-center sm:w-auto md:w-auto  md:py-0 sm:py-0 md:pl-0 sm:pl-0 pl-7 py-4 absolute">
                 <li className="mx-4 my-6 md:my-0">
                   <p className="text-xl text-secondary">
                     Hola, {userInfo.name}
@@ -94,7 +90,7 @@ const Header = () => {
               <ul className="md:flex md:items-center z-[-1] md:z-auto sm:z-auto">
                 <li className="mx-4  my-6 md:my-0">
                   <Link
-                    className="text-xl text-secondary"
+                    className="text-xl text-secondary "
                     to="/login"
                   >
                     Iniciar sesion

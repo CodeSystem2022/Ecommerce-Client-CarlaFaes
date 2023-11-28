@@ -6,6 +6,9 @@ import {
   productCreateReviewReducer,
   productDetailReducer,
   productListReducer,
+  productSortByPriceReducer,
+  productSortReducer,
+  sortOrderReducer,
 } from "./Reducers/ProductsReducer";
 import { cartReducer } from "./Reducers/CartReducers";
 import {
@@ -24,7 +27,7 @@ import {
 const rootReducer = combineReducers({
   productList: productListReducer,
   productsDetail: productDetailReducer,
-  productReviewCreate:productCreateReviewReducer,
+  productReviewCreate: productCreateReviewReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
@@ -33,7 +36,10 @@ const rootReducer = combineReducers({
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
-  orderMyList:orderListMyReducer,
+  orderMyList: orderListMyReducer,
+  sortOrder: productSortReducer,
+  //sortOrderReducer:sortOrderReducer,
+  //productSortByPriceReducer:productSortByPriceReducer,
 });
 
 //carrito
@@ -56,7 +62,7 @@ const initialState = {
   },
   userLogin: {
     userInfo: userInfoFromLocalStorage,
-  }
+  },
 };
 
 const store = configureStore({

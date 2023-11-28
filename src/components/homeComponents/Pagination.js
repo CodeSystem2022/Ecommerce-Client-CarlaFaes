@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 const Pagination = (props) => {
   const { page, pages, keywords = "" } = props;
-  console.log(props, "pages props");
   return (
     <>
       {pages >= 1 && (

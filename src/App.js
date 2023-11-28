@@ -11,10 +11,7 @@ import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import NotFound from "./screens/NotFound";
-import Header from './components/Header'
 import OrderId from "./screens/OrderId";
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import "./index.css";
 
 function App() {

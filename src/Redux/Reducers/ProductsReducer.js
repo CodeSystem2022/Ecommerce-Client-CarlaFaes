@@ -9,6 +9,13 @@ import {
   PRODUCT_LIST_FAIL,
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
+  PRODUCT_SORT_BY_PRICE_FAIL,
+  PRODUCT_SORT_BY_PRICE_REQUEST,
+  PRODUCT_SORT_BY_PRICE_SUCCESS,
+  PRODUCT_SORT_FAIL,
+  PRODUCT_SORT_REQUEST,
+  PRODUCT_SORT_SUCCESS,
+  SET_SORT_ORDER,
 } from "../Constants/ProductsConstants";
 
 //lista de productso
@@ -20,6 +27,8 @@ export const productListReducer = (state = { products: [] }, action) => {
         products: [],
       };
     case PRODUCT_LIST_SUCCESS:
+      console.log("Reducer: products", action.payload.products, "page", action.payload.page, "pages", action.payload.pages, "loading", action.payload.loading);
+
       return {
         loading: false,
         products: action.payload.products,
@@ -27,6 +36,8 @@ export const productListReducer = (state = { products: [] }, action) => {
         pages: action.payload.pages,
       };
     case PRODUCT_LIST_FAIL:
+      console.error("Reducer error:", action.payload); // Agrega un log aquí
+
       return {
         loading: false,
         error: action.payload,
@@ -35,6 +46,42 @@ export const productListReducer = (state = { products: [] }, action) => {
       return state;
   }
 };
+
+// Reductor para el ordenamiento general y por precio
+export const productSortReducer = (
+  state = { loading: true, products: [], sortOptions: null },
+  action
+) => {
+  switch (action.type) {
+    case PRODUCT_SORT_REQUEST:
+    case PRODUCT_SORT_BY_PRICE_REQUEST:
+      return {
+        loading: true,
+        products: [],
+        sortOptions: null,
+      };
+    case PRODUCT_SORT_SUCCESS:
+    case PRODUCT_SORT_BY_PRICE_SUCCESS:
+      console.log("sortOptions in reducer:", action.payload.sortOptions,"products", action.payload.products,"page",action.payload.page, "pages",action.payload.pages,"loading",action.payload.loading);
+      return {
+        loading: false,
+        products: action.payload.products,
+        page: action.payload.page,
+        pages: action.payload.pages,
+        sortOptions: action.payload.sortOptions || null,
+      };
+    case PRODUCT_SORT_FAIL:
+    case PRODUCT_SORT_BY_PRICE_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+        sortOptions: null,
+      };
+    default:
+      return state;
+  }
+};
+
 
 //detalle de producto
 export const productDetailReducer = (
