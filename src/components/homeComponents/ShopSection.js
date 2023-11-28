@@ -37,7 +37,7 @@ const ShopSection = (props) => {
           <h5 className="flex flex-row justify-center text-primary w-full text-lg font-bold">
             CATALOGO DE PRODUCTOS
           </h5>
-          <div className="bg-red-500 grid grid-cols-4">
+          <div className=" grid grid-cols-4">
             <div className="col-start-1 col-span-1 h-full mr-5 px-3">
               <PrimarySearchAppBar
                 onSort={(sortBy, sortOrder) =>
@@ -170,10 +170,9 @@ const ShopSection = (props) => {
                     </div>
                   ))}
                 </>
-              ) : (
+              ) : products? (
                 <>
-                  {products ? (
-                    products.map((product, index) => (
+                 { products.map((product, index) => (
                       <div className="container font-serif w-full h-full shadow-md rounded-xl">
                         <Link to={`/product/${product._id}`}>
                           <div
@@ -182,13 +181,13 @@ const ShopSection = (props) => {
                           >
                             <div className="w-full  relative">
                               <img
-                                className="w-full rounded-t-md h-2/4"
+                                className="w-full rounded-t-md"
                                 loading="lazy"
                                 src={product.image}
                                 alt="img_"
                               />
                             </div>
-                            <div className="flex flex-col justify-center items-cente sm:text-lg md:text-xl">
+                            <div className="flex flex-col justify-center items-center sm:text-lg md:text-xl">
                               <p className="w-full flex-none mb-3  leading-none text-secondary">
                                 {product.name}
                               </p>
@@ -198,11 +197,9 @@ const ShopSection = (props) => {
                         </Link>
                       </div>
                     ))
-                  ) : (
-                    <Loading />
-                  )}
+                 }
                 </>
-              )}
+              ): "no hay productos"}
             </div>
           </div>
           <Pagination

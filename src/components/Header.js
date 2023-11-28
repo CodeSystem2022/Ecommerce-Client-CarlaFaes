@@ -64,7 +64,7 @@ const Header = () => {
                     Cerrar sesion
                   </Link>
                 </li>
-                <li className=" my-6 md:my-0 mx-4 flex flex-row-reverse">
+                {/* <li className=" my-6 md:my-0 mx-4 flex flex-row-reverse">
                   <form
                     onSubmit={submitHandler}
                     className="text-xl hover:text-gray-800 flex flex-row-reverse"
@@ -82,7 +82,7 @@ const Header = () => {
                       className="focus:ring-2 focus:ring-secondary focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 px-2 ring-1 ring-slate-200 shadow-sm"
                     />
                   </form>
-                </li>
+                </li> */}
               </ul>
             </div>
           ) : (

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { FcSearch } from "react-icons/fc";
 import { listProduct, sortProducts } from "../../Redux/Actions/ProductActions";
 import { useDispatch, useSelector } from "react-redux";
+import Button from "@mui/material/Button";
+
 
 export default function PrimarySearchAppBar({
   onSortByName,
@@ -50,32 +52,13 @@ export default function PrimarySearchAppBar({
     <>
       <div className="h-full border-t bg-primary mt-0">
         <div className="container text-center text-gray-500 py-4">
-          <div>filtros de bsuqueda</div>
-          <div>
-            {/* Ejemplo de botones de ordenamiento */}
-            <button className="bg-stone-300 text-blue-900 p-2 border border-stone-600" onClick={() => handleSort("name", "asc")}>
-              Ordenar A-Z
-            </button>
-            <button className="bg-stone-300 text-blue-900 p-2 border border-stone-600" onClick={() => handleSort("name", "desc")}>
-              Ordenar Z-A
-            </button>
-          </div>
-
-          <div>
-            {/* Ejemplo de botones de ordenamiento */}
-            <button className="bg-stone-300 text-blue-900 p-2 border border-stone-600" onClick={() => handleSort("price", "asc")}>
-              Ordenar Mayor Precio
-            </button>
-            <button className="bg-stone-300 text-blue-900 p-2 border border-stone-600" onClick={() => handleSort("price", "desc")}>
-              Ordenar Menor precio
-            </button>
-          </div>
+        <div className="px-1">
           <form
             onSubmit={submitHandler}
             className="text-xl hover:text-gray-800 flex flex-row-reverse"
           >
             <button
-              className=" hover:border-secondary hover:bg-slate-300  font-semibold rounded-full   text-secondary p-3"
+              className="bg-stone-200 border-opacity-50 border-gray-700 hover:border-secondary hover:bg-slate-300  font-semibold rounded-full   text-secondary p-3"
               type="submit"
             >
               <FcSearch className="top-0 right-0 text-2xl" />
@@ -87,8 +70,30 @@ export default function PrimarySearchAppBar({
               className="focus:ring-2 focus:ring-secondary focus:outline-none appearance-none w-full text-sm leading-6 text-slate-900 placeholder-slate-400 rounded-md py-2 px-2 ring-1 ring-slate-200 shadow-sm"
             />
           </form>
+          </div>
+          <div className="py-1 text-slate-400 tetx-lg font-semibold" >Filtrar busqueda</div>
+          <div>
+          <h4 className="py-1 text-slate-400">Ordenar por nombres</h4>
+            {/* Ejemplo de botones de ordenamiento */}
+            <Button variant="outlined" className=" w-full border border-solid p-2 border-secondary rounded-lg  py-2 mb-4 font-normal font-[Poppins] text-lg leading-none text-secondary" onClick={() => handleSort("name", "asc")}>
+              Ordenar A-Z
+            </Button>
+            <Button variant="outlined" className="border border-solid p-2 border-secondary rounded-lg w-full py-2 mb-4 font-normal font-[Poppins] text-lg leading-none text-secondary" onClick={() => handleSort("name", "desc")}>
+              Ordenar Z-A
+            </Button>
+          </div>
 
-          <div>{}</div>
+          <div>
+            <h4 className="py-1 text-slate-400">Ordenar por precio</h4>
+            {/* Ejemplo de botones de ordenamiento */}
+            <Button variant="outlined" className=" border border-solid p-2  border-secondary rounded-lg w-auto py-2 mb-4 font-normal font-[Poppins] text-lg leading-none text-secondary" onClick={() => handleSort("price", "asc")}>
+            Ordenar Precios de Menor a Mayor
+            </Button>
+            <Button variant="outlined" className="border border-solid p-2 border-secondary rounded-lg w-auto py-2 mb-4 font-normal font-[Poppins] text-lg leading-none text-secondary" onClick={() => handleSort("price", "desc")}>
+            Ordenar Precios de Mayor a Menor
+            </Button>
+          </div>
+       
         </div>
       </div>
     </>
