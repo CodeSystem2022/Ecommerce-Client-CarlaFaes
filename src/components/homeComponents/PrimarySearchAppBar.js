@@ -50,7 +50,7 @@ export default function PrimarySearchAppBar({
 
   return (
     <>
-      <div className="h-full border-t bg-primary mt-0">
+      <div className="h-full w-full border-t bg-primary mt-0 p-2">
         <div className="container text-center text-gray-500 py-4">
         <div className="px-1">
           <form
@@ -75,23 +75,31 @@ export default function PrimarySearchAppBar({
           <div>
           <h4 className="py-1 text-slate-400">Ordenar por nombres</h4>
             {/* Ejemplo de botones de ordenamiento */}
-            <Button variant="outlined" className=" w-full border border-solid p-2 border-secondary rounded-lg  py-2 mb-4 font-normal font-[Poppins] text-lg leading-none text-secondary" onClick={() => handleSort("name", "asc")}>
+            <div>
+            <Button variant="contained" className=" w-full border border-solid p-2 border-secondary rounded-lg  py-2 mb-4 font-normal font-[Poppins] text-lg leading-none" onClick={() => handleSort("name", "asc")}>
               Ordenar A-Z
             </Button>
-            <Button variant="outlined" className="border border-solid p-2 border-secondary rounded-lg w-full py-2 mb-4 font-normal font-[Poppins] text-lg leading-none text-secondary" onClick={() => handleSort("name", "desc")}>
+            </div>
+            <div className="my-2">
+            <Button variant="contained" className="border border-solid p-2 border-secondary rounded-lg w-full py-2 mb-4 font-normal font-[Poppins] text-lg leading-none text-secondary" onClick={() => handleSort("name", "desc")}>
               Ordenar Z-A
             </Button>
+            </div>
           </div>
 
           <div>
             <h4 className="py-1 text-slate-400">Ordenar por precio</h4>
             {/* Ejemplo de botones de ordenamiento */}
-            <Button variant="outlined" className=" border border-solid p-2  border-secondary rounded-lg w-auto py-2 mb-4 font-normal font-[Poppins] text-lg leading-none text-secondary" onClick={() => handleSort("price", "asc")}>
+            <div  className="my-2">
+            <Button variant="contained"  onClick={() => handleSort("price", "asc")}>
             Ordenar Precios de Menor a Mayor
             </Button>
-            <Button variant="outlined" className="border border-solid p-2 border-secondary rounded-lg w-auto py-2 mb-4 font-normal font-[Poppins] text-lg leading-none text-secondary" onClick={() => handleSort("price", "desc")}>
+            </div>
+            <div className="my-2">
+            <Button variant="contained"  onClick={() => handleSort("price", "desc")}>
             Ordenar Precios de Mayor a Menor
             </Button>
+            </div>
           </div>
        
         </div>

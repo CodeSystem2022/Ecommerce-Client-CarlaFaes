@@ -34,7 +34,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="flex justify-between items-center p-2 sticky top-0 bg-[#2f4556]  z-10">
+      <div className="flex justify-between items-center p-2 sticky top-0 bg-primary  z-10">
         <div>
           <Link to="/">
          <img src={logo_icono} alt="icono" className="w-28 h-24 rounded-lg"/>
