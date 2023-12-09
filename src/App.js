@@ -12,6 +12,7 @@ import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import NotFound from "./screens/NotFound";
 import OrderId from "./screens/OrderId";
+import TermsAndConditions from "./components/homeComponents/TermsAndConditions";
 import "./index.css";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route path="/placeOrder" Component={PlaceOrderScreen} />
           <Route path="/order" Component={OrderScreen} />
           <Route path="/order/:id?" Component={OrderId} />
+          <Route path="/terminos" Component={TermsAndConditions} />
           <Route path="*" Component={NotFound} />
         </Routes>
       </BrowserRouter>

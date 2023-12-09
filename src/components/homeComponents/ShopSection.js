@@ -26,7 +26,8 @@ const ShopSection = (props) => {
   console.log(sortOrder, "sortorder de shop");
 
   useEffect(() => {
-    dispatch(listProduct(keywords, pageNumber));
+   dispatch(listProduct(keywords, pageNumber));
+
     dispatch(sortProducts(sortOptions));
   }, [keywords, dispatch, pageNumber, sortOptions]);
 
@@ -46,7 +47,9 @@ const ShopSection = (props) => {
                 <Promocion />
               <div className="grid col-start-2 col-span-4 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8 text-secondary mt-4">
                 {loading ? (
-                  <Loading />
+                  <div className="">
+                    <Loading />
+                  </div>
                 ) : error ? (
                   <Message variant="alert-danger">{error}</Message>
                 ) : sortOrder.sortOptions !== null &&

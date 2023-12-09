@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,23 +14,31 @@ import TextField from '@mui/material/TextField';
 
 const ShippingScreen = () => {
   window.scrollTo(0, 0);
-
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
+  const [address, setAddress] = useState(shippingAddress.address || "");
+  const [city, setCity] = useState(shippingAddress.city || "");
+  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode || "");
+  const [country, setCountry] = useState(shippingAddress.country || "");
 
-  const [address, setAddress] = useState(shippingAddress.address);
-  const [city, setCity] = useState(shippingAddress.city);
-  const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
-  const [country, setCountry] = useState(shippingAddress.country);
-  console.log(shippingAddress, "shippingAddress");
-  let history = useNavigate();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const dispatch = useDispatch();
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(saveShippingAddress({ address, city, postalCode, country }));
     
-    history("/payment");
+    // Restablecer los campos después del envío del formulario
+    setAddress("");
+    setCity("");
+    setPostalCode("");
+    setCountry("");
+
+    navigate("/payment");
   };
 
   return (
@@ -69,10 +77,10 @@ const ShippingScreen = () => {
                 </div>
                 <div className="pb-4">
               <FormControl>
-              <InputLabel htmlFor="outlined-adornment-password">Correo postal</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-password">Codigo postal</InputLabel>
                 <Input
                   type="text"
-                  placeholder="Ingrese correo postal"
+                  placeholder="Ingrese codigo postal"
                   value={postalCode}
                   onChange={(e) => setPostalCode(e.target.value)}
                 />

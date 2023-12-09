@@ -85,7 +85,7 @@ const SingleProduct = () => {
     <>
       <Toast />
       <Header />
-      <Container fixed>
+      <Container fixed  sx={{ bgcolor: "#b3c5cd", minHeight: "100vh" }}>
         {loading ? (
           <Loading />
         ) : error ? (
@@ -97,7 +97,7 @@ const SingleProduct = () => {
                 <div>
                   <div className="flex flex-row justify-center items-center">
                     <img
-                      className="w-2/3 h-96 rounded-lg shadow-xl"
+                      className="w-2/3 h-2/3 rounded-lg shadow-xl"
                       src={product.image}
                       alt={product.name}
                     />
@@ -180,7 +180,7 @@ const SingleProduct = () => {
                   )}
                   {product.reviews?.map((review) => (
                     <div
-                      className="container grid grid-rows-3 w-full border border-primary rounded-lg justify-center items-center mb-2"
+                      className="container grid grid-rows-3 w-full border border-primary rounded-lg justify-start px-2 items-center mb-2"
                       key={review._id}
                     >
                       <div className="relative w-full flex flex-row ">
@@ -202,7 +202,7 @@ const SingleProduct = () => {
                     </div>
                   ))}
                 </div>
-                <div className="grid grid-cols-1">
+                <div className="flex flex-col p-1">
                   <div>
                     <strong className="w-full mb-3 font-semibold font-[Poppins] text-lg leading-none text-primary">
                       Escribe una breve opinion del producto
@@ -212,10 +212,10 @@ const SingleProduct = () => {
                       <Message>{errorCreateReview}</Message>
                     )}
                   </div>
-                  <div className="flex flex-col justify-start items-start pb-3 w-4/5 h-full">
+                  <div className=" p-3 flex justify-center items-center pb-1 w-full h-5/6">
                     {userInfo ? (
                       <>
-                        <form onSubmit={submitHandler}>
+                        <form onSubmit={submitHandler} className="w-full">
                           <FormControl fullWidth>
                             <InputLabel id="demo-simple-select-label">
                               Puntuar
@@ -234,13 +234,14 @@ const SingleProduct = () => {
                               <MenuItem value={4}>4 - Muy Bueno</MenuItem>
                               <MenuItem value={5}>5 - Excelente</MenuItem>
                             </Select>
-                            <div className="h-full">
-                              <TextareaAutosize
-                                rowsMin={3}
-                                placeholder="Escribe tu comentario aquí"
+                            <div className="h-full w-full">
+                              <textarea placeholder="Escribe tu comentario aquí"
                                 value={comment}
                                 onChange={(e) => setComment(e.target.value)}
-                              />
+                                className="w-full px-1 rounded-md h-2/3 py-2"
+                                >
+                              </textarea>
+                            
                             </div>
                             <Button
                               type="submit"
